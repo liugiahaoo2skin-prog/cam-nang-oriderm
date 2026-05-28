@@ -1,746 +1,270 @@
 <!DOCTYPE html>
-<html lang="vi"><head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ORI DERM — Bộ Tiêu Chuẩn Giao Tiếp &amp; Quy Trình Chat</title>
-<!-- Nạp Tailwind CSS cho giao diện hiện đại, responsive -->
-<script src="https://cdn.tailwindcss.com"></script>
-<!-- Nạp Google Fonts DM Sans & Serif -->
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300;1,9..40,400&amp;family=DM+Serif+Display:ital@0;1&amp;display=swap" rel="stylesheet">
-<!-- Nạp FontAwesome để hiển thị các Icon chuyên nghiệp -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ORI DERM — Bộ Tiêu Chuẩn Giao Tiếp & Cẩm Nang Xử Lý Chat</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #15803d;
+            --primary-hover: #166534;
+            --bg-color: #f4f6f3;
+            --text-color: #1f2937;
+            --border-color: #e5e7eb;
+            --danger-color: #dc2626;
+            --danger-bg: #fef2f2;
+            --success-color: #16a34a;
+            --success-bg: #f0fdf4;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; padding: 20px 0; }
+        .container { max-width: 1100px; margin: 0 auto; background: #ffffff; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05), 0 2px 4px -1px rgba(0,0,0,0.06); }
+        
+        /* Header */
+        header { border-bottom: 2px solid var(--border-color); padding-bottom: 20px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: center; }
+        .logo-area { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { width: 40px; height: 40px; background: var(--primary-color); border-radius: 8px; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 20px; }
+        .logo-text h1 { font-size: 22px; color: var(--primary-color); font-weight: 700; }
+        .logo-text p { font-size: 13px; color: #6b7280; }
+        .meta-info { text-align: right; font-size: 13px; color: #6b7280; }
+        .meta-info a { color: var(--primary-color); text-decoration: none; font-weight: 500; }
 
-<style>
-  :root {
-    --green:    #1D9E75;
-    --green-lt: #E1F5EE;
-    --green-dk: #085041;
-    --coral:    #D85A30;
-    --coral-lt: #FAECE7;
-    --coral-dk: #712B13;
-    --blue:     #378ADD;
-    --blue-lt:  #E6F1FB;
-    --blue-dk:  #0C447C;
-    --amber:    #BA7517;
-    --amber-lt: #FAEEDA;
-    --amber-dk: #633806;
-    --gray:     #888780;
-    --gray-lt:  #F1EFE8;
-    --gray-dk:  #444441;
-    --text:     #1a1a18;
-    --text-2:   #5f5e5a;
-    --text-3:   #9c9a92;
-    --border:   #e4e2da;
-    --bg:       #fafaf8;
-    --white:    #ffffff;
-    --red:      #A32D2D;
-    --red-lt:   #FCEBEB;
-  }
+        /* Section Styling */
+        section { margin-bottom: 40px; }
+        .section-title { font-size: 16px; font-weight: 700; color: #374151; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+        .section-number { background: #374151; color: white; border-radius: 50%; width: 24px; height: 24px; display: inline-flex; align-items: center; justify-content: center; font-size: 12px; }
+        
+        /* Table / Grid Box */
+        .grid-table { display: grid; grid-template-columns: 1fr 1.5fr 1fr 1fr; border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; margin-bottom: 20px; }
+        .table-header { background: #f9fafb; font-weight: 600; font-size: 13px; color: #4b5563; padding: 12px; border-bottom: 1px solid var(--border-color); text-transform: uppercase; }
+        .table-cell { padding: 14px; border-bottom: 1px solid var(--border-color); font-size: 14px; background: #fff; }
+        .grid-table .table-cell:nth-last-child(-n+4) { border-bottom: none; }
+        
+        /* Rules Grid (Nên / Cấm) */
+        .rules-container { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+        .rule-box { border-radius: 8px; padding: 24px; border: 1px solid var(--border-color); }
+        .rule-box.success { background: var(--success-bg); border-color: #bbf7d0; }
+        .rule-box.danger { background: var(--danger-bg); border-color: #fecaca; }
+        .rule-title { font-size: 14px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+        .rule-box.success .rule-title { color: #15803d; }
+        .rule-box.danger .rule-title { color: #b91c1c; }
+        
+        .rule-list { list-style: none; display: flex; flex-direction: flex-col; gap: 14px; }
+        .rule-item { position: relative; padding-left: 14px; font-size: 14px; }
+        .rule-item::before { content: "•"; position: absolute; left: 0; top: 0; font-weight: bold; }
+        .rule-box.success .rule-item::before { color: var(--success-color); }
+        .rule-box.danger .rule-item::before { color: var(--danger-color); }
+        .rule-item strong { display: block; font-size: 14px; margin-bottom: 20px; color: #111827; }
+        .rule-item span { display: block; font-size: 12px; color: #6b7280; margin-top: -18px; }
 
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background-color: var(--bg);
-    color: var(--text);
-  }
+        /* Flow Process */
+        .flow-box { border: 1px solid var(--border-color); border-radius: 8px; padding: 20px; margin-bottom: 20px; background: #fff; }
+        .flow-header { font-weight: 600; font-size: 14px; color: var(--primary-color); margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; background: #f0fdf4; padding: 10px 14px; border-radius: 6px; }
+        .flow-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .step-card { background: #f9fafb; border: 1px solid var(--border-color); border-radius: 6px; padding: 14px; font-size: 13px; }
+        .step-num { font-weight: 700; color: #9ca3af; text-transform: uppercase; font-size: 11px; margin-bottom: 4px; display: block; }
+        .step-title { font-weight: 600; color: #374151; margin-bottom: 6px; display: block; }
+        .step-card p { color: #6b7280; font-size: 12px; line-height: 1.4; }
+        .badge { font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 9999px; background: #e5e7eb; color: #374151; }
 
-  /* Định hình các ô có thể chỉnh sửa trong chế độ sửa đổi */
-  body.edit-mode .editable-field {
-    outline: 2px dashed var(--amber) !important;
-    outline-offset: 2px;
-    border-radius: 4px;
-    background-color: rgba(186, 117, 23, 0.05);
-    cursor: text;
-    transition: all 0.2s ease;
-  }
-  
-  body.edit-mode .editable-field:focus {
-    outline: 2px solid var(--amber) !important;
-    background-color: rgba(186, 117, 23, 0.1);
-  }
+        /* Footer */
+        footer { margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--border-color); text-align: center; font-size: 12px; color: #9ca3af; }
+    </style>
+</head>
+<body>
 
-  /* Kiểm soát hiển thị các nút chức năng theo chế độ */
-  .action-btn-delete { display: none; }
-  .action-btn-add { display: none; }
-  
-  body.edit-mode .action-btn-delete {
-    display: inline-flex;
-  }
-  body.edit-mode .action-btn-add {
-    display: inline-flex;
-  }
+<div class="container">
+    <!-- HEADER -->
+    <header>
+        <div class="logo-area">
+            <div class="logo-icon">O</div>
+            <div class="logo-text">
+                <h1>ORI DERM</h1>
+                <p>Bộ tiêu chuẩn giao tiếp khách hàng & Cẩm nang xử lý Chat</p>
+            </div>
+        </div>
+        <div class="meta-info">
+            <p>Đường dây nóng: <strong>098 805 1350</strong></p>
+            <p><a href="https://oriderm.com" target="_blank">oriderm.com</a></p>
+        </div>
+    </header>
 
-  /* Đảm bảo giao diện cuộn mượt mà */
-  html { scroll-behavior: smooth; }
+    <!-- SECTION 1 -->
+    <section>
+        <div class="section-title">
+            <span class="section-number">1</span> Nguyên tắc mở đầu cuộc Chat tổng quát
+        </div>
+        <div class="grid-table">
+            <div class="table-header">Nhóm đối tượng</div>
+            <div class="table-header">Dấu hiệu nhận biết</div>
+            <div class="table-header">Xưng呼 với khách</div>
+            <div class="table-header">Cách tự xưng</div>
 
-  /* Tùy biến thanh cuộn */
-  ::-webkit-scrollbar { width: 8px; height: 8px; }
-  ::-webkit-scrollbar-track { background: var(--bg); }
-  ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
-  ::-webkit-scrollbar-thumb:hover { background: var(--gray); }
-</style>
-<style>*, ::before, ::after{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }::backdrop{--tw-border-spacing-x:0;--tw-border-spacing-y:0;--tw-translate-x:0;--tw-translate-y:0;--tw-rotate:0;--tw-skew-x:0;--tw-skew-y:0;--tw-scale-x:1;--tw-scale-y:1;--tw-pan-x: ;--tw-pan-y: ;--tw-pinch-zoom: ;--tw-scroll-snap-strictness:proximity;--tw-gradient-from-position: ;--tw-gradient-via-position: ;--tw-gradient-to-position: ;--tw-ordinal: ;--tw-slashed-zero: ;--tw-numeric-figure: ;--tw-numeric-spacing: ;--tw-numeric-fraction: ;--tw-ring-inset: ;--tw-ring-offset-width:0px;--tw-ring-offset-color:#fff;--tw-ring-color:rgb(59 130 246 / 0.5);--tw-ring-offset-shadow:0 0 #0000;--tw-ring-shadow:0 0 #0000;--tw-shadow:0 0 #0000;--tw-shadow-colored:0 0 #0000;--tw-blur: ;--tw-brightness: ;--tw-contrast: ;--tw-grayscale: ;--tw-hue-rotate: ;--tw-invert: ;--tw-saturate: ;--tw-sepia: ;--tw-drop-shadow: ;--tw-backdrop-blur: ;--tw-backdrop-brightness: ;--tw-backdrop-contrast: ;--tw-backdrop-grayscale: ;--tw-backdrop-hue-rotate: ;--tw-backdrop-invert: ;--tw-backdrop-opacity: ;--tw-backdrop-saturate: ;--tw-backdrop-sepia: ;--tw-contain-size: ;--tw-contain-layout: ;--tw-contain-paint: ;--tw-contain-style: }/* ! tailwindcss v3.4.17 | MIT License | https://tailwindcss.com */*,::after,::before{box-sizing:border-box;border-width:0;border-style:solid;border-color:#e5e7eb}::after,::before{--tw-content:''}:host,html{line-height:1.5;-webkit-text-size-adjust:100%;-moz-tab-size:4;tab-size:4;font-family:ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";font-feature-settings:normal;font-variation-settings:normal;-webkit-tap-highlight-color:transparent}body{margin:0;line-height:inherit}hr{height:0;color:inherit;border-top-width:1px}abbr:where([title]){-webkit-text-decoration:underline dotted;text-decoration:underline dotted}h1,h2,h3,h4,h5,h6{font-size:inherit;font-weight:inherit}a{color:inherit;text-decoration:inherit}b,strong{font-weight:bolder}code,kbd,pre,samp{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;font-feature-settings:normal;font-variation-settings:normal;font-size:1em}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}table{text-indent:0;border-color:inherit;border-collapse:collapse}button,input,optgroup,select,textarea{font-family:inherit;font-feature-settings:inherit;font-variation-settings:inherit;font-size:100%;font-weight:inherit;line-height:inherit;letter-spacing:inherit;color:inherit;margin:0;padding:0}button,select{text-transform:none}button,input:where([type=button]),input:where([type=reset]),input:where([type=submit]){-webkit-appearance:button;background-color:transparent;background-image:none}:-moz-focusring{outline:auto}:-moz-ui-invalid{box-shadow:none}progress{vertical-align:baseline}::-webkit-inner-spin-button,::-webkit-outer-spin-button{height:auto}[type=search]{-webkit-appearance:textfield;outline-offset:-2px}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-file-upload-button{-webkit-appearance:button;font:inherit}summary{display:list-item}blockquote,dd,dl,figure,h1,h2,h3,h4,h5,h6,hr,p,pre{margin:0}fieldset{margin:0;padding:0}legend{padding:0}menu,ol,ul{list-style:none;margin:0;padding:0}dialog{padding:0}textarea{resize:vertical}input::placeholder,textarea::placeholder{opacity:1;color:#9ca3af}[role=button],button{cursor:pointer}:disabled{cursor:default}audio,canvas,embed,iframe,img,object,svg,video{display:block;vertical-align:middle}img,video{max-width:100%;height:auto}[hidden]:where(:not([hidden=until-found])){display:none}.fixed{position:fixed}.absolute{position:absolute}.relative{position:relative}.sticky{position:sticky}.inset-0{inset:0px}.right-4{right:1rem}.top-0{top:0px}.top-4{top:1rem}.z-50{z-index:50}.mx-auto{margin-left:auto;margin-right:auto}.ml-auto{margin-left:auto}.mt-0\.5{margin-top:0.125rem}.mt-1{margin-top:0.25rem}.mt-12{margin-top:3rem}.mt-2{margin-top:0.5rem}.mt-4{margin-top:1rem}.block{display:block}.flex{display:flex}.grid{display:grid}.hidden{display:none}.h-1\.5{height:0.375rem}.h-10{height:2.5rem}.h-6{height:1.5rem}.h-64{height:16rem}.h-8{height:2rem}.min-h-screen{min-height:100vh}.w-1\.5{width:0.375rem}.w-10{width:2.5rem}.w-16{width:4rem}.w-6{width:1.5rem}.w-8{width:2rem}.w-full{width:100%}.max-w-2xl{max-width:42rem}.max-w-4xl{max-width:56rem}.flex-shrink-0{flex-shrink:0}.flex-grow{flex-grow:1}@keyframes bounce{0%, 100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(0.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,0.2,1)}}.animate-bounce{animation:bounce 1s infinite}@keyframes pulse{50%{opacity:.5}}.animate-pulse{animation:pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite}.grid-cols-1{grid-template-columns:repeat(1, minmax(0, 1fr))}.flex-col{flex-direction:column}.flex-wrap{flex-wrap:wrap}.items-start{align-items:flex-start}.items-end{align-items:flex-end}.items-center{align-items:center}.justify-end{justify-content:flex-end}.justify-center{justify-content:center}.justify-between{justify-content:space-between}.gap-1\.5{gap:0.375rem}.gap-2{gap:0.5rem}.gap-2\.5{gap:0.625rem}.gap-3{gap:0.75rem}.space-y-0\.5 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.125rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.125rem * var(--tw-space-y-reverse))}.space-y-1 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.25rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.25rem * var(--tw-space-y-reverse))}.space-y-2 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.5rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.5rem * var(--tw-space-y-reverse))}.space-y-3 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(0.75rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(0.75rem * var(--tw-space-y-reverse))}.space-y-4 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(1rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(1rem * var(--tw-space-y-reverse))}.space-y-8 > :not([hidden]) ~ :not([hidden]){--tw-space-y-reverse:0;margin-top:calc(2rem * calc(1 - var(--tw-space-y-reverse)));margin-bottom:calc(2rem * var(--tw-space-y-reverse))}.divide-y > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(1px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(1px * var(--tw-divide-y-reverse))}.divide-\[\#e4e2da\] > :not([hidden]) ~ :not([hidden]){--tw-divide-opacity:1;border-color:rgb(228 226 218 / var(--tw-divide-opacity, 1))}.overflow-hidden{overflow:hidden}.overflow-x-auto{overflow-x:auto}.rounded-full{border-radius:9999px}.rounded-lg{border-radius:0.5rem}.rounded-md{border-radius:0.375rem}.rounded-xl{border-radius:0.75rem}.border{border-width:1px}.border-b{border-bottom-width:1px}.border-t{border-top-width:1px}.border-dashed{border-style:dashed}.border-\[\#e4e2da\]{--tw-border-opacity:1;border-color:rgb(228 226 218 / var(--tw-border-opacity, 1))}.border-amber-200{--tw-border-opacity:1;border-color:rgb(253 230 138 / var(--tw-border-opacity, 1))}.border-amber-300{--tw-border-opacity:1;border-color:rgb(252 211 77 / var(--tw-border-opacity, 1))}.border-amber-600{--tw-border-opacity:1;border-color:rgb(217 119 6 / var(--tw-border-opacity, 1))}.border-emerald-200{--tw-border-opacity:1;border-color:rgb(167 243 208 / var(--tw-border-opacity, 1))}.border-emerald-300{--tw-border-opacity:1;border-color:rgb(110 231 183 / var(--tw-border-opacity, 1))}.border-gray-700{--tw-border-opacity:1;border-color:rgb(55 65 81 / var(--tw-border-opacity, 1))}.border-red-200{--tw-border-opacity:1;border-color:rgb(254 202 202 / var(--tw-border-opacity, 1))}.border-red-300{--tw-border-opacity:1;border-color:rgb(252 165 165 / var(--tw-border-opacity, 1))}.bg-\[\#1D9E75\]{--tw-bg-opacity:1;background-color:rgb(29 158 117 / var(--tw-bg-opacity, 1))}.bg-amber-100{--tw-bg-opacity:1;background-color:rgb(254 243 199 / var(--tw-bg-opacity, 1))}.bg-amber-50{--tw-bg-opacity:1;background-color:rgb(255 251 235 / var(--tw-bg-opacity, 1))}.bg-amber-50\/40{background-color:rgb(255 251 235 / 0.4)}.bg-amber-600{--tw-bg-opacity:1;background-color:rgb(217 119 6 / var(--tw-bg-opacity, 1))}.bg-black\/60{background-color:rgb(0 0 0 / 0.6)}.bg-blue-100{--tw-bg-opacity:1;background-color:rgb(219 234 254 / var(--tw-bg-opacity, 1))}.bg-blue-50{--tw-bg-opacity:1;background-color:rgb(239 246 255 / var(--tw-bg-opacity, 1))}.bg-blue-50\/50{background-color:rgb(239 246 255 / 0.5)}.bg-blue-600{--tw-bg-opacity:1;background-color:rgb(37 99 235 / var(--tw-bg-opacity, 1))}.bg-emerald-100{--tw-bg-opacity:1;background-color:rgb(209 250 229 / var(--tw-bg-opacity, 1))}.bg-emerald-50{--tw-bg-opacity:1;background-color:rgb(236 253 245 / var(--tw-bg-opacity, 1))}.bg-emerald-50\/30{background-color:rgb(236 253 245 / 0.3)}.bg-emerald-50\/40{background-color:rgb(236 253 245 / 0.4)}.bg-emerald-50\/50{background-color:rgb(236 253 245 / 0.5)}.bg-emerald-500{--tw-bg-opacity:1;background-color:rgb(16 185 129 / var(--tw-bg-opacity, 1))}.bg-gray-100{--tw-bg-opacity:1;background-color:rgb(243 244 246 / var(--tw-bg-opacity, 1))}.bg-gray-200{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.bg-gray-50{--tw-bg-opacity:1;background-color:rgb(249 250 251 / var(--tw-bg-opacity, 1))}.bg-gray-50\/50{background-color:rgb(249 250 251 / 0.5)}.bg-gray-900{--tw-bg-opacity:1;background-color:rgb(17 24 39 / var(--tw-bg-opacity, 1))}.bg-red-100{--tw-bg-opacity:1;background-color:rgb(254 226 226 / var(--tw-bg-opacity, 1))}.bg-red-50{--tw-bg-opacity:1;background-color:rgb(254 242 242 / var(--tw-bg-opacity, 1))}.bg-red-50\/20{background-color:rgb(254 242 242 / 0.2)}.bg-red-50\/40{background-color:rgb(254 242 242 / 0.4)}.bg-red-50\/50{background-color:rgb(254 242 242 / 0.5)}.bg-red-500{--tw-bg-opacity:1;background-color:rgb(239 68 68 / var(--tw-bg-opacity, 1))}.bg-transparent{background-color:transparent}.bg-white{--tw-bg-opacity:1;background-color:rgb(255 255 255 / var(--tw-bg-opacity, 1))}.fill-none{fill:none}.stroke-current{stroke:currentColor}.p-3{padding:0.75rem}.p-3\.5{padding:0.875rem}.p-4{padding:1rem}.p-5{padding:1.25rem}.p-6{padding:1.5rem}.px-2\.5{padding-left:0.625rem;padding-right:0.625rem}.px-3{padding-left:0.75rem;padding-right:0.75rem}.px-4{padding-left:1rem;padding-right:1rem}.px-5{padding-left:1.25rem;padding-right:1.25rem}.px-6{padding-left:1.5rem;padding-right:1.5rem}.py-1{padding-top:0.25rem;padding-bottom:0.25rem}.py-1\.5{padding-top:0.375rem;padding-bottom:0.375rem}.py-2{padding-top:0.5rem;padding-bottom:0.5rem}.py-2\.5{padding-top:0.625rem;padding-bottom:0.625rem}.py-3{padding-top:0.75rem;padding-bottom:0.75rem}.py-3\.5{padding-top:0.875rem;padding-bottom:0.875rem}.py-4{padding-top:1rem;padding-bottom:1rem}.py-6{padding-top:1.5rem;padding-bottom:1.5rem}.py-8{padding-top:2rem;padding-bottom:2rem}.pb-3{padding-bottom:0.75rem}.pt-4{padding-top:1rem}.text-left{text-align:left}.text-center{text-align:center}.font-mono{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace}.text-\[10px\]{font-size:10px}.text-\[11px\]{font-size:11px}.text-base{font-size:1rem;line-height:1.5rem}.text-lg{font-size:1.125rem;line-height:1.75rem}.text-sm{font-size:0.875rem;line-height:1.25rem}.text-xl{font-size:1.25rem;line-height:1.75rem}.text-xs{font-size:0.75rem;line-height:1rem}.font-bold{font-weight:700}.font-medium{font-weight:500}.font-semibold{font-weight:600}.uppercase{text-transform:uppercase}.leading-relaxed{line-height:1.625}.tracking-tight{letter-spacing:-0.025em}.tracking-wider{letter-spacing:0.05em}.text-amber-600{--tw-text-opacity:1;color:rgb(217 119 6 / var(--tw-text-opacity, 1))}.text-amber-700{--tw-text-opacity:1;color:rgb(180 83 9 / var(--tw-text-opacity, 1))}.text-amber-800{--tw-text-opacity:1;color:rgb(146 64 14 / var(--tw-text-opacity, 1))}.text-amber-900{--tw-text-opacity:1;color:rgb(120 53 15 / var(--tw-text-opacity, 1))}.text-blue-600{--tw-text-opacity:1;color:rgb(37 99 235 / var(--tw-text-opacity, 1))}.text-blue-700{--tw-text-opacity:1;color:rgb(29 78 216 / var(--tw-text-opacity, 1))}.text-blue-800{--tw-text-opacity:1;color:rgb(30 64 175 / var(--tw-text-opacity, 1))}.text-blue-900{--tw-text-opacity:1;color:rgb(30 58 138 / var(--tw-text-opacity, 1))}.text-emerald-600{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.text-emerald-700{--tw-text-opacity:1;color:rgb(4 120 87 / var(--tw-text-opacity, 1))}.text-emerald-800{--tw-text-opacity:1;color:rgb(6 95 70 / var(--tw-text-opacity, 1))}.text-gray-400{--tw-text-opacity:1;color:rgb(156 163 175 / var(--tw-text-opacity, 1))}.text-gray-500{--tw-text-opacity:1;color:rgb(107 114 128 / var(--tw-text-opacity, 1))}.text-gray-600{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.text-gray-700{--tw-text-opacity:1;color:rgb(55 65 81 / var(--tw-text-opacity, 1))}.text-gray-800{--tw-text-opacity:1;color:rgb(31 41 55 / var(--tw-text-opacity, 1))}.text-gray-900{--tw-text-opacity:1;color:rgb(17 24 39 / var(--tw-text-opacity, 1))}.text-green-400{--tw-text-opacity:1;color:rgb(74 222 128 / var(--tw-text-opacity, 1))}.text-red-500{--tw-text-opacity:1;color:rgb(239 68 68 / var(--tw-text-opacity, 1))}.text-red-600{--tw-text-opacity:1;color:rgb(220 38 38 / var(--tw-text-opacity, 1))}.text-red-700{--tw-text-opacity:1;color:rgb(185 28 28 / var(--tw-text-opacity, 1))}.text-red-800{--tw-text-opacity:1;color:rgb(153 27 27 / var(--tw-text-opacity, 1))}.text-red-900{--tw-text-opacity:1;color:rgb(127 29 29 / var(--tw-text-opacity, 1))}.text-red-950{--tw-text-opacity:1;color:rgb(69 10 10 / var(--tw-text-opacity, 1))}.text-white{--tw-text-opacity:1;color:rgb(255 255 255 / var(--tw-text-opacity, 1))}.antialiased{-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}.shadow-2xl{--tw-shadow:0 25px 50px -12px rgb(0 0 0 / 0.25);--tw-shadow-colored:0 25px 50px -12px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-md{--tw-shadow:0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);--tw-shadow-colored:0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.shadow-sm{--tw-shadow:0 1px 2px 0 rgb(0 0 0 / 0.05);--tw-shadow-colored:0 1px 2px 0 var(--tw-shadow-color);box-shadow:var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)}.backdrop-blur-sm{--tw-backdrop-blur:blur(4px);-webkit-backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia);backdrop-filter:var(--tw-backdrop-blur) var(--tw-backdrop-brightness) var(--tw-backdrop-contrast) var(--tw-backdrop-grayscale) var(--tw-backdrop-hue-rotate) var(--tw-backdrop-invert) var(--tw-backdrop-opacity) var(--tw-backdrop-saturate) var(--tw-backdrop-sepia)}.transition{transition-property:color, background-color, border-color, fill, stroke, opacity, box-shadow, transform, filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;transition-property:color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter, -webkit-text-decoration-color, -webkit-backdrop-filter;transition-timing-function:cubic-bezier(0.4, 0, 0.2, 1);transition-duration:150ms}.duration-150{transition-duration:150ms}.hover\:border-emerald-500:hover{--tw-border-opacity:1;border-color:rgb(16 185 129 / var(--tw-border-opacity, 1))}.hover\:border-red-500:hover{--tw-border-opacity:1;border-color:rgb(239 68 68 / var(--tw-border-opacity, 1))}.hover\:bg-\[\#168360\]:hover{--tw-bg-opacity:1;background-color:rgb(22 131 96 / var(--tw-bg-opacity, 1))}.hover\:bg-amber-100:hover{--tw-bg-opacity:1;background-color:rgb(254 243 199 / var(--tw-bg-opacity, 1))}.hover\:bg-amber-700:hover{--tw-bg-opacity:1;background-color:rgb(180 83 9 / var(--tw-bg-opacity, 1))}.hover\:bg-blue-700:hover{--tw-bg-opacity:1;background-color:rgb(29 78 216 / var(--tw-bg-opacity, 1))}.hover\:bg-gray-200:hover{--tw-bg-opacity:1;background-color:rgb(229 231 235 / var(--tw-bg-opacity, 1))}.hover\:text-\[\#1D9E75\]:hover{--tw-text-opacity:1;color:rgb(29 158 117 / var(--tw-text-opacity, 1))}.hover\:text-emerald-600:hover{--tw-text-opacity:1;color:rgb(5 150 105 / var(--tw-text-opacity, 1))}.hover\:text-gray-600:hover{--tw-text-opacity:1;color:rgb(75 85 99 / var(--tw-text-opacity, 1))}.hover\:text-red-700:hover{--tw-text-opacity:1;color:rgb(185 28 28 / var(--tw-text-opacity, 1))}.hover\:text-red-800:hover{--tw-text-opacity:1;color:rgb(153 27 27 / var(--tw-text-opacity, 1))}.focus\:outline-none:focus{outline:2px solid transparent;outline-offset:2px}.focus\:ring-2:focus{--tw-ring-offset-shadow:var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);--tw-ring-shadow:var(--tw-ring-inset) 0 0 0 calc(2px + var(--tw-ring-offset-width)) var(--tw-ring-color);box-shadow:var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000)}.focus\:ring-amber-500:focus{--tw-ring-opacity:1;--tw-ring-color:rgb(245 158 11 / var(--tw-ring-opacity, 1))}@media (min-width: 640px){.sm\:flex{display:flex}}@media (min-width: 768px){.md\:grid-cols-2{grid-template-columns:repeat(2, minmax(0, 1fr))}.md\:grid-cols-3{grid-template-columns:repeat(3, minmax(0, 1fr))}.md\:grid-cols-4{grid-template-columns:repeat(4, minmax(0, 1fr))}.md\:grid-cols-5{grid-template-columns:repeat(5, minmax(0, 1fr))}.md\:divide-x > :not([hidden]) ~ :not([hidden]){--tw-divide-x-reverse:0;border-right-width:calc(1px * var(--tw-divide-x-reverse));border-left-width:calc(1px * calc(1 - var(--tw-divide-x-reverse)))}.md\:divide-y-0 > :not([hidden]) ~ :not([hidden]){--tw-divide-y-reverse:0;border-top-width:calc(0px * calc(1 - var(--tw-divide-y-reverse)));border-bottom-width:calc(0px * var(--tw-divide-y-reverse))}}</style></head>
-<body class="min-h-screen flex flex-col antialiased">
+            <div class="table-cell"><strong>Khách hàng thông thường</strong></div>
+            <div class="table-cell">Khách hỏi mua sản phẩm, tư vấn liệu trình điều trị mụn, thâm, chăm sóc da cơ bản.</div>
+            <div class="table-cell">Anh / Chị / Bạn (ưu tiên gọi tên riêng của khách nếu có sẵn trên profile).</div>
+            <div class="table-cell">Dược sĩ ORI DERM</div>
 
-<!-- TOP BANNER & EDIT CONTROLLER -->
-<div class="sticky top-0 z-50 shadow-md">
-  <!-- Header chính -->
-  <header class="bg-white border-b border-[#e4e2da] px-6 py-3 flex items-center justify-between">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-lg bg-[#1D9E75] flex items-center justify-center shadow-sm">
-        <svg class="w-6 h-6 text-white fill-none stroke-current" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-      </div>
-      <div>
-        <h1 class="font-bold text-lg tracking-tight text-gray-900 editable-field" id="brandName">ORI DERM</h1>
-        <p class="text-xs text-gray-500 editable-field" id="docSub">Bộ tiêu chuẩn giao tiếp khách hàng &amp; Cẩm nang xử lý Chat</p>
-      </div>
-    </div>
-    <div class="hidden sm:flex flex-col items-end text-xs text-gray-400">
-      <span>Đường dây nóng: <strong>098 805 1350</strong></span>
-      <span class="hover:text-[#1D9E75]"><a href="https://oriderm.com" target="_blank">oriderm.com</a></span>
-    </div>
-  </header>
+            <div class="table-cell"><strong>Khách hàng lớn tuổi / Khó tính</strong></div>
+            <div class="table-cell">Dùng từ ngữ trang trọng, viết hoa đúng chuẩn, có dấu hiệu thể hiện vị thế lớn tuổi.</div>
+            <div class="table-cell">Dạ Anh / Dạ Chị (luôn kèm từ "Dạ" ở đầu câu để thể hiện sự kính trọng).</div>
+            <div class="table-cell">Dược sĩ tư vấn</div>
+        </div>
+    </section>
 
-  <!-- Thanh trạng thái Chỉnh sửa & Lưu File -->
-  <div class="bg-amber-50 border-b border-amber-300 px-6 py-2.5 flex flex-wrap items-center justify-between gap-3 text-sm text-amber-900" id="editController">
-    <div class="flex items-center gap-2">
-      <i class="fa-solid fa-pen-fancy text-amber-600 animate-pulse"></i>
-      <span id="barNotice"><strong>Chế độ xem tài liệu.</strong> Bạn có thể chỉnh sửa trực tiếp nội dung bằng cách nhấn nút bên phải.</span>
-    </div>
-    <div class="flex items-center gap-2 ml-auto">
-      <button class="bg-amber-600 hover:bg-amber-700 text-white font-semibold py-1.5 px-4 rounded-md transition duration-150 items-center gap-1.5 shadow-sm flex" id="btnEdit" onclick="startEdit()">
-        <i class="fa-solid fa-edit"></i> Chỉnh sửa
-      </button>
-      <button class="bg-[#1D9E75] hover:bg-[#168360] text-white font-semibold py-1.5 px-4 rounded-md transition duration-150 items-center gap-1.5 shadow-sm hidden" id="btnSave" onclick="saveFile()">
-        <i class="fa-solid fa-floppy-disk"></i> Lưu file HTML mới
-      </button>
-      <button class="bg-transparent border border-amber-600 text-amber-700 hover:bg-amber-100 font-medium py-1.5 px-4 rounded-md transition duration-150 items-center gap-1.5 hidden" id="btnCancel" onclick="cancelEdit()">
-        <i class="fa-solid fa-xmark"></i> Huỷ bỏ
-      </button>
-    </div>
-  </div>
+    <!-- SECTION 2 -->
+    <section>
+        <div class="section-title">
+            <span class="section-number">2</span> Quy ước xưng xô chi tiết theo tình huống
+        </div>
+        <div class="grid-table" style="grid-template-columns: 1fr 2fr 1fr;">
+            <div class="table-header">Ngữ cảnh cụ thể</div>
+            <div class="table-header">Quy ước chuẩn chỉnh</div>
+            <div class="table-header">Ghi chú quan trọng</div>
+
+            <div class="table-cell"><strong>Giai đoạn Chào hỏi & Nhận diện</strong></div>
+            <div class="table-cell">"Dạ ORI DERM xin chào Anh/Chị [Tên Khách]. Em là Dược sĩ tư vấn, rất vui được hỗ trợ mình ạ."</div>
+            <div class="table-cell">Bắt buộc trong 3 tin nhắn đầu.</div>
+
+            <div class="table-cell"><strong>Giai đoạn Đưa phác đồ điều trị</strong></div>
+            <div class="table-cell">"Dựa trên tình trạng da hiện tại, Dược sĩ khuyên mình nên phối hợp..." hoặc "Theo chuyên môn y khoa..."</div>
+            <div class="table-cell">Tăng độ uy tín chuyên gia.</div>
+        </div>
+    </section>
+
+    <!-- SECTION 3 -->
+    <section>
+        <div class="section-title">
+            <span class="section-number">3</span> Quy ước ngôn từ chuyên nghiệp — Nên dùng & Tuyệt đối cấm
+        </div>
+        <div class="rules-container">
+            <!-- Cột Nên Dùng -->
+            <div class="rule-box success">
+                <div class="rule-title">✓ V NÊN SỬ DỤNG LINH HOẠT</div>
+                <ul class="rule-list">
+                    <li class="rule-item">
+                        <strong>"Với tình trạng da bạn vừa mô tả..."</strong>
+                        <span>Tăng tính cá nhân hóa, thể hiện sự lắng nghe kỹ.</span>
+                    </li>
+                    <li class="rule-item">
+                        <strong>"Thành phần hoạt chất X giúp cải thiện Y nhờ cơ chế..."</strong>
+                        <span>Sử dụng chuyên môn y khoa chính thống để tăng uy tín.</span>
+                    </li>
+                    <li class="rule-item">
+                        <strong>"Mình đề xuất bạn cân nhắc thêm giải pháp..."</strong>
+                        <span>Khơi gợi giải pháp nhẹ nhàng, không chèo kéo ép khách mua.</span>
+                    </li>
+                    <li class="rule-item">
+                        <strong>"Mình rất tiếc và hiểu cảm giác của bạn lúc này..."</strong>
+                        <span>Tuyệt đối cần dùng để đồng cảm khi bắt đầu xử lý khiếu nại.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Cột Cấm Dùng -->
+            <div class="rule-box danger">
+                <div class="rule-title">🗙 X TUYỆT ĐỐI CẤM SỬ DỤNG</div>
+                <ul class="rule-list">
+                    <li class="rule-item">
+                        <strong>"Trị dứt điểm hoàn toàn / Cam kết 100%..."</strong>
+                        <span>Cấm đoán: Sai lệch bản chất khoa học của ngành da liễu.</span>
+                    </li>
+                    <li class="rule-item">
+                        <strong>"Bên shop khác bán toàn là hàng fake đó..."</strong>
+                        <span>Hành vi hạ bệ, dèm pha đối thủ làm mất uy tín thương hiệu.</span>
+                    </li>
+                    <li class="rule-item">
+                        <strong>"Do bạn tự dùng sai hướng dẫn nên mới bị..."</strong>
+                        <span>Tối kỵ đổ lỗi cho khách hàng trước khi tìm hiểu rõ căn nguyên.</span>
+                    </li>
+                    <li class="rule-item">
+                        <strong>"Cái này mình cũng không rõ/không biết nữa..."</strong>
+                        <span>Nếu chưa rõ, phải xin phép kiểm tra rồi phản hồi lại ngay sau đó.</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4 -->
+    <section>
+        <div class="section-title">
+            <span class="section-number">4</span> Phân luồng tư vấn — 5 tình huống phản hồi tiêu chuẩn
+        </div>
+
+        <!-- LUỒNG 1 -->
+        <div class="flow-box">
+            <div class="flow-header">
+                <span>LUỒNG 1: Khách tìm hiểu sản phẩm cụ thể</span>
+                <span class="badge">Tỷ lệ gặp: 70%</span>
+            </div>
+            <div class="flow-steps">
+                <div class="step-card">
+                    <span class="step-num">Bước 1</span>
+                    <span class="step-title">Đọc hiểu tâm lý</span>
+                    <p>Nhận diện tông giọng khách để điều chỉnh xưng hô ngay từ câu đầu.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">Bước 2A</span>
+                    <span class="step-title">Có tên SP?</span>
+                    <p>Cung cấp công dụng cốt lõi, cơ chế dùng và các điểm lưu ý đặc biệt.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">Bước 2B</span>
+                    <span class="step-title">Chưa có SP?</span>
+                    <p>Hỏi ngay 3 câu hỏi sàng lọc chuyên sâu (Loại da, vấn đề, thói quen).</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">Bước 3</span>
+                    <span class="step-title">Đóng gói tư vấn</span>
+                    <p>Đưa ra routine gợi ý kèm giải thích rõ vì sao da họ cần hoạt chất đó.</p>
+                </div>
+            </div>
+            <div style="font-size: 12px; margin-top: 12px; color: #16a34a; font-style: italic; background: #f0fdf4; padding: 8px; border-radius: 4px;">
+                💡 Mẹo Dược sĩ: 3 Câu hỏi chẩn đoán nhanh bao gồm: Loại da hiện tại, Vấn đề da khó chịu nhất, Sản phẩm đang dùng kết hợp.
+            </div>
+        </div>
+
+        <!-- LUỒNG 2 -->
+        <div class="flow-box">
+            <div class="flow-header">
+                <span>LUỒNG 2: Tư vấn Routine chuyên sâu cá nhân hóa</span>
+                <span class="badge" style="background: #dbeafe; color: #1e40af;">Giữ chân & Tăng tỷ lệ mua</span>
+            </div>
+            <div class="flow-steps">
+                <div class="step-card">
+                    <span class="step-num">Bước 1</span>
+                    <span class="step-title">Khai thác tiền sử</span>
+                    <p>Yêu cầu khách chụp ảnh da camera thường góc thẳng và hai bên má nếu cần.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">Bước 2</span>
+                    <span class="step-title">Phân tích khoa học</span>
+                    <p>Chỉ rõ nguyên nhân hình thành mụn/thâm dựa trên lớp màng bảo vệ da.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">Bước 3</span>
+                    <span class="step-title">Thiết lập Routine</span>
+                    <p>Sắp xếp thứ tự Sáng/Tối. Ghi rõ liều lượng dùng từ nồng độ thấp đến cao.</p>
+                </div>
+                <div class="step-card">
+                    <span class="step-num">Bước 4</span>
+                    <span class="step-title">Theo dõi định kỳ</span>
+                    <p>Hẹn lịch chủ động nhắn tin kiểm tra da sau 7 ngày và 14 ngày sử dụng.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 ORI DERM. Tài liệu lưu hành nội bộ nghiêm cấm sao chép dưới mọi hình thức.</p>
+        <p style="margin-top: 4px; font-size: 11px;">Cập nhật lần cuối: <span id="lastUpdate">28/05/2026</span></p>
+    </footer>
 </div>
 
-<!-- CONTAINER CHÍNH -->
-<main class="flex-grow max-w-4xl w-full mx-auto px-4 py-8" id="documentBody">
-  <div class="page space-y-8">
-
-    <!-- PHẦN 1: CÁCH TỰ XƯNG -->
-    <section class="space-y-4">
-      <div class="flex items-center gap-3">
-        <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-sm">1</span>
-        <h2 class="text-sm font-bold tracking-wider text-gray-500 uppercase editable-field">Tiêu chuẩn xưng hô — Phía Ori Derm tự xưng</h2>
-      </div>
-
-      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-        <div class="bg-emerald-50 border-b border-[#e4e2da] px-5 py-3 flex items-center gap-2">
-          <i class="fa-solid fa-user-doctor text-emerald-700 text-lg"></i>
-          <span class="font-bold text-gray-800 text-sm editable-field">Cách tự giới thiệu &amp; xưng hô theo từng ngữ cảnh tư vấn</span>
-          <span class="text-xs text-gray-400 ml-auto editable-field">Quy tắc vàng: "Dược sĩ tư vấn"</span>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da]">
-          <!-- Khung chat mở đầu -->
-          <div class="p-4 space-y-2">
-            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Mở đầu cuộc chat</span>
-            <span class="text-sm font-bold text-gray-800 block editable-field">Dược sĩ tư vấn</span>
-            <p class="text-xs text-gray-500 leading-relaxed editable-field">"Dược sĩ tư vấn Ori Derm xin chào và hỗ trợ bạn..."</p>
-          </div>
-          <!-- Tư vấn chuyên môn -->
-          <div class="p-4 space-y-2">
-            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Khi tư vấn chuyên môn</span>
-            <span class="text-sm font-bold text-gray-800 block editable-field">Mình / Bên mình</span>
-            <p class="text-xs text-gray-500 leading-relaxed editable-field">"Với tình trạng này, mình nghĩ da bạn nên..."</p>
-          </div>
-          <!-- Đại diện thương hiệu -->
-          <div class="p-4 space-y-2">
-            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Khi đại diện thương hiệu</span>
-            <span class="text-sm font-bold text-gray-800 block editable-field">Ori Derm</span>
-            <p class="text-xs text-gray-500 leading-relaxed editable-field">"Ori Derm luôn cam kết cung cấp sản phẩm chính hãng..."</p>
-          </div>
-          <!-- Tuyệt đối cấm dùng -->
-          <div class="p-4 space-y-2 bg-red-50/50">
-            <span class="text-[10px] font-bold text-red-500 uppercase tracking-wider block">Tuyệt đối KHÔNG dùng</span>
-            <span class="text-sm font-bold text-red-700 block editable-field">Shop / Em / Tôi</span>
-            <p class="text-xs text-gray-500 leading-relaxed editable-field">Tránh tạo cảm giác thiếu chuyên nghiệp hoặc quá khô khan.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- PHẦN 2: XƯNG HÔ VỚI KHÁCH HÀNG -->
-    <section class="space-y-4">
-      <div class="flex items-center gap-3">
-        <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-sm">2</span>
-        <h2 class="text-sm font-bold tracking-wider text-gray-500 uppercase editable-field">Xưng hô với khách — Linh hoạt theo từng đối tượng</h2>
-      </div>
-
-      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-        <div class="bg-blue-50 border-b border-[#e4e2da] px-5 py-3 flex items-center gap-2">
-          <i class="fa-solid fa-users text-blue-700 text-lg"></i>
-          <span class="font-bold text-gray-800 text-sm editable-field">Nhận diện khách hàng qua tin nhắn để xưng hô chuẩn xác</span>
-        </div>
-
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-sm" id="customerTable">
-            <thead class="bg-gray-50 border-b border-[#e4e2da] text-xs font-bold text-gray-500 uppercase">
-              <tr>
-                <th class="px-5 py-3">Nhóm đối tượng</th>
-                <th class="px-5 py-3">Dấu hiệu nhận biết</th>
-                <th class="px-5 py-3">Gọi khách là</th>
-                <th class="px-5 py-3">Tự xưng là</th>
-                <th class="px-5 py-3 w-16 action-btn-delete">Xóa</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-[#e4e2da]">
-              <tr>
-                <td class="px-5 py-4 font-medium text-gray-900 editable-field">Gen Z / Khách hàng trẻ</td>
-                <td class="px-5 py-4 text-gray-600 editable-field">Nhắn "bạn ơi", dùng từ lóng, viết tắt tự nhiên, icons vui nhộn</td>
-                <td class="px-5 py-4"><span class="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full editable-field">Bạn</span></td>
-                <td class="px-5 py-4 text-gray-600 editable-field">Mình</td>
-                <td class="px-5 py-4 text-center action-btn-delete">
-                  <button onclick="deleteTableRow(this)" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash-can"></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-5 py-4 font-medium text-gray-900 editable-field">Millennials / Từ 25–35 tuổi</td>
-                <td class="px-5 py-4 text-gray-600 editable-field">Trao đổi lịch sự, hỏi thẳng vấn đề, chưa rõ độ tuổi cụ thể</td>
-                <td class="px-5 py-4"><span class="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full editable-field">Bạn</span> <span class="text-xs text-gray-400">hoặc</span> <span class="px-3 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded-full editable-field">Anh / Chị</span></td>
-                <td class="px-5 py-4 text-gray-600 editable-field">Mình / Bên mình</td>
-                <td class="px-5 py-4 text-center action-btn-delete">
-                  <button onclick="deleteTableRow(this)" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash-can"></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-5 py-4 font-medium text-gray-900 editable-field">Trung niên / Trên 35 tuổi</td>
-                <td class="px-5 py-4 text-gray-600 editable-field">Chủ động xưng Anh/Chị, trao đổi cực kỳ trang trọng và kỹ lưỡng</td>
-                <td class="px-5 py-4"><span class="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full editable-field">Anh / Chị</span></td>
-                <td class="px-5 py-4 text-gray-600 editable-field">Em / Bên mình</td>
-                <td class="px-5 py-4 text-center action-btn-delete">
-                  <button onclick="deleteTableRow(this)" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash-can"></i></button>
-                </td>
-              </tr>
-              <tr>
-                <td class="px-5 py-4 font-medium text-gray-900 editable-field">Chưa xác định</td>
-                <td class="px-5 py-4 text-gray-600 editable-field">Tin nhắn đầu tiên cực ngắn, không có tín hiệu ngữ cảnh rõ ràng</td>
-                <td class="px-5 py-4"><span class="px-3 py-1 text-xs font-semibold bg-emerald-100 text-emerald-800 rounded-full editable-field">Bạn (mặc định)</span></td>
-                <td class="px-5 py-4 text-gray-600 editable-field">Mình</td>
-                <td class="px-5 py-4 text-center action-btn-delete">
-                  <button onclick="deleteTableRow(this)" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash-can"></i></button>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        
-        <!-- Nút thêm dòng đối tượng trong chế độ Chỉnh sửa -->
-        <div class="p-3 bg-gray-50 border-t border-[#e4e2da] text-center action-btn-add">
-          <button onclick="addNewTableRow()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-1.5 px-4 rounded-md shadow-sm transition flex items-center gap-1.5 mx-auto">
-            <i class="fa-solid fa-plus"></i> Thêm nhóm đối tượng mới
-          </button>
-        </div>
-
-        <div class="bg-blue-50/50 px-5 py-3 border-t border-[#e4e2da] flex gap-3 text-xs text-blue-900">
-          <i class="fa-solid fa-circle-info text-blue-600 mt-0.5 text-sm"></i>
-          <span class="editable-field"><strong>Quy chuẩn bắt buộc:</strong> Khi đã xác định được cách gọi tên phù hợp, <strong>phải giữ sự nhất quán 100% đến hết cuộc hội thoại.</strong> Tuyệt đối không tự ý chuyển đổi xưng hô đột ngột giữa "Bạn" và "Chị" trong cùng một phiên chat.</span>
-        </div>
-      </div>
-    </section>
-
-    <!-- PHẦN 3: NÊN DÙNG & KHÔNG DÙNG -->
-    <section class="space-y-4">
-      <div class="flex items-center gap-3">
-        <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-sm">3</span>
-        <h2 class="text-sm font-bold tracking-wider text-gray-500 uppercase editable-field">Quy ước ngôn từ chuyên nghiệp — Nên dùng &amp; Tuyệt đối cấm</h2>
-      </div>
-
-      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-        <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da]">
-          
-          <!-- CỘT NÊN DÙNG -->
-          <div class="p-5 space-y-4 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center gap-2 pb-3 border-b border-[#e4e2da] text-emerald-700 font-bold uppercase tracking-wider text-xs">
-                <i class="fa-solid fa-circle-check text-base"></i>
-                <span class="editable-field">✓ Nên sử dụng linh hoạt</span>
-              </div>
-              
-              <ul class="space-y-4 pt-4" id="goodRulesList">
-                <li class="flex items-start gap-2.5 group">
-                  <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></span>
-                  <div class="flex-grow space-y-0.5">
-                    <p class="text-sm font-semibold text-gray-900 editable-field">"Với tình trạng da bạn vừa mô tả..."</p>
-                    <p class="text-xs text-gray-400 editable-field">Tăng tính cá nhân hóa, thể hiện sự lắng nghe kỹ.</p>
-                  </div>
-                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
-                </li>
-                <li class="flex items-start gap-2.5 group">
-                  <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></span>
-                  <div class="flex-grow space-y-0.5">
-                    <p class="text-sm font-semibold text-gray-900 editable-field">"Thành phần hoạt chất X giúp cải thiện Y nhờ cơ chế..."</p>
-                    <p class="text-xs text-gray-400 editable-field">Sử dụng chuyên môn y khoa chính thống để tăng uy tín.</p>
-                  </div>
-                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
-                </li>
-                <li class="flex items-start gap-2.5 group">
-                  <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></span>
-                  <div class="flex-grow space-y-0.5">
-                    <p class="text-sm font-semibold text-gray-900 editable-field">"Mình đề xuất bạn cân nhắc thêm giải pháp..."</p>
-                    <p class="text-xs text-gray-400 editable-field">Khơi gợi giải pháp nhẹ nhàng, không chèo kéo ép khách mua.</p>
-                  </div>
-                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
-                </li>
-                <li class="flex items-start gap-2.5 group">
-                  <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></span>
-                  <div class="flex-grow space-y-0.5">
-                    <p class="text-sm font-semibold text-gray-900 editable-field">"Mình rất tiếc và hiểu cảm giác của bạn lúc này..."</p>
-                    <p class="text-xs text-gray-400 editable-field">Tuyệt đối cần dùng để đồng cảm khi bắt đầu xử lý khiếu nại.</p>
-                  </div>
-                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
-                </li>
-              </ul>
-            </div>
-            
-            <button onclick="addNewRule('good')" class="action-btn-add w-full border border-dashed border-emerald-300 hover:border-emerald-500 text-emerald-700 font-semibold text-xs py-2 px-4 rounded-lg flex items-center justify-center gap-1.5 transition mt-4 bg-emerald-50/50">
-              <i class="fa-solid fa-plus"></i> Thêm khuyến nghị "Nên Dùng"
-            </button>
-          </div>
-
-          <!-- CỘT CẤM DÙNG -->
-          <div class="p-5 space-y-4 flex flex-col justify-between bg-red-50/20">
-            <div>
-              <div class="flex items-center gap-2 pb-3 border-b border-[#e4e2da] text-red-700 font-bold uppercase tracking-wider text-xs">
-                <i class="fa-solid fa-circle-xmark text-base"></i>
-                <span class="editable-field">✗ Tuyệt đối CẤM sử dụng</span>
-              </div>
-              
-              <ul class="space-y-4 pt-4" id="badRulesList">
-                <li class="flex items-start gap-2.5 group">
-                  <span class="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></span>
-                  <div class="flex-grow space-y-0.5">
-                    <p class="text-sm font-semibold text-red-900 editable-field">"Trị dứt điểm hoàn toàn / Cam kết 100%..."</p>
-                    <p class="text-xs text-gray-400 editable-field">Cấm đoán: Sai lệch bản chất khoa học của ngành da liễu.</p>
-                  </div>
-                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
-                </li>
-                <li class="flex items-start gap-2.5 group">
-                  <span class="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></span>
-                  <div class="flex-grow space-y-0.5">
-                    <p class="text-sm font-semibold text-red-900 editable-field">"Bên shop khác bán toàn là hàng fake đó..."</p>
-                    <p class="text-xs text-gray-400 editable-field">Hành vi hạ bệ, dèm pha đối thủ làm mất uy tín thương hiệu.</p>
-                  </div>
-                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
-                </li>
-                <li class="flex items-start gap-2.5 group">
-                  <span class="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></span>
-                  <div class="flex-grow space-y-0.5">
-                    <p class="text-sm font-semibold text-red-900 editable-field">"Do bạn tự dùng sai hướng dẫn nên mới bị..."</p>
-                    <p class="text-xs text-gray-400 editable-field">Tối kỵ đổ lỗi cho khách hàng trước khi tìm hiểu rõ căn nguyên.</p>
-                  </div>
-                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
-                </li>
-                <li class="flex items-start gap-2.5 group">
-                  <span class="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></span>
-                  <div class="flex-grow space-y-0.5">
-                    <p class="text-sm font-semibold text-red-900 editable-field">"Cái này mình cũng không rõ/không biết nữa..."</p>
-                    <p class="text-xs text-gray-400 editable-field">Nếu chưa rõ, phải xin phép kiểm tra rồi phản hồi lại ngay sau đó.</p>
-                  </div>
-                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
-                </li>
-              <li class="flex items-start gap-2.5 group">
-      <span class="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></span>
-      <div class="flex-grow space-y-0.5">
-        <p class="text-sm font-semibold text-red-900 editable-field">"Nội dung quy tắc mới..."</p>
-        <p class="text-xs text-gray-400 editable-field">Mô tả hoặc ghi chú trường hợp áp dụng...</p>
-      </div>
-      <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
-    </li><li class="flex items-start gap-2.5 group">
-      <span class="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></span>
-      <div class="flex-grow space-y-0.5">
-        <p class="text-sm font-semibold text-red-900 editable-field">"Nội dung quy tắc mới..."</p>
-        <p class="text-xs text-gray-400 editable-field">Mô tả hoặc ghi chú trường hợp áp dụng...</p>
-      </div>
-      <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
-    </li></ul>
-            </div>
-            
-            <button onclick="addNewRule('bad')" class="action-btn-add w-full border border-dashed border-red-300 hover:border-red-500 text-red-700 font-semibold text-xs py-2 px-4 rounded-lg flex items-center justify-center gap-1.5 transition mt-4 bg-red-50/50">
-              <i class="fa-solid fa-plus"></i> Thêm điều cấm "Không Nên Dùng"
-            </button>
-          </div>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- PHẦN 4: 5 LUỒNG PHÂN LOẠI CHAT -->
-    <section class="space-y-4">
-      <div class="flex items-center gap-3">
-        <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-sm">4</span>
-        <h2 class="text-sm font-bold tracking-wider text-gray-500 uppercase editable-field">Phân luồng tư vấn — 5 tình huống phản hồi tiêu chuẩn</h2>
-      </div>
-
-      <!-- LUỒNG 1 -->
-      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-        <div class="bg-emerald-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
-          <span class="px-2.5 py-1 text-[11px] font-bold bg-emerald-100 text-emerald-800 rounded-md">LUỒNG 1</span>
-          <span class="font-bold text-gray-800 text-sm editable-field">Khách tìm hiểu sản phẩm cụ thể</span>
-          <span class="text-xs text-emerald-700 font-semibold ml-auto editable-field">Tỷ lệ gặp: 70%</span>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 1</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Đọc hiểu tâm lý</span>
-            <p class="text-xs text-gray-500 editable-field">Nhận diện tông giọng khách để điều chỉnh xưng hô ngay từ câu đầu.</p>
-          </div>
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2A</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Có tên SP?</span>
-            <p class="text-xs text-gray-500 editable-field">Cung cấp công dụng cốt lõi, cơ chế dùng và các điểm lưu ý đặc biệt.</p>
-          </div>
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2B</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Chưa có SP?</span>
-            <p class="text-xs text-gray-500 editable-field">Hỏi ngay 3 câu hỏi sàng lọc chuyên sâu (Loại da, vấn đề, thói quen).</p>
-          </div>
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 3</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Đóng gói tư vấn</span>
-            <p class="text-xs text-gray-500 editable-field">Đưa ra routine gợi ý kèm giải thích rõ vì sao da họ cần hoạt chất đó.</p>
-          </div>
-        </div>
-
-        <div class="bg-emerald-50/30 px-5 py-2.5 border-t border-[#e4e2da] flex gap-2 text-xs text-emerald-800">
-          <i class="fa-solid fa-lightbulb text-emerald-600 mt-0.5"></i>
-          <span class="editable-field"><strong>Mẹo Dược sĩ:</strong> 3 Câu hỏi chẩn đoán nhanh bao gồm: <strong>Loại da hiện tại</strong>, <strong>Vấn đề da khó chịu nhất</strong>, <strong>Sản phẩm đang dùng kết hợp</strong>.</span>
-        </div>
-      </div>
-
-      <!-- LUỒNG 2 -->
-      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-        <div class="bg-blue-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
-          <span class="px-2.5 py-1 text-[11px] font-bold bg-blue-100 text-blue-800 rounded-md">LUỒNG 2</span>
-          <span class="font-bold text-gray-800 text-sm editable-field">Tư vấn Routine chuyên sâu cá nhân hóa</span>
-          <span class="text-xs text-blue-700 font-semibold ml-auto editable-field">Giữ chân &amp; Tăng tỷ lệ mua</span>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
-          <div class="p-3.5 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 1</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Lập hồ sơ bệnh lý</span>
-            <p class="text-xs text-gray-500 editable-field">Hỏi về tiền sử kích ứng da, ngân sách và thói quen sinh hoạt.</p>
-          </div>
-          <div class="p-3.5 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Thiết lập Routine</span>
-            <p class="text-xs text-gray-500 editable-field">Chia rõ các bước Sáng &amp; Tối, thứ tự layer trước/sau cụ thể.</p>
-          </div>
-          <div class="p-3.5 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 3</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Khuyến cáo xung khắc</span>
-            <p class="text-xs text-gray-500 editable-field">Chỉ rõ những hoạt chất KHÔNG được mix chung (như Retinol + BHA).</p>
-          </div>
-          <div class="p-3.5 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 4</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Kiến thức khoa học</span>
-            <p class="text-xs text-gray-500 editable-field">Chia sẻ link phân tích chuyên môn của oriderm.com để khách đọc thêm.</p>
-          </div>
-          <div class="p-3.5 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 5</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Hẹn ngày tái khám</span>
-            <p class="text-xs text-gray-500 editable-field">Chủ động đề xuất theo dõi, nhắn lại hỏi han sau 14 ngày sử dụng.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- LUỒNG 3 -->
-      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-        <div class="bg-red-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
-          <span class="px-2.5 py-1 text-[11px] font-bold bg-red-100 text-red-800 rounded-md">LUỒNG 3</span>
-          <span class="font-bold text-red-950 text-sm editable-field">Giải quyết khiếu nại kích ứng / Dị ứng da</span>
-          <span class="text-xs text-red-700 font-semibold ml-auto editable-field">QUY TRÌNH KHẨN CẤP</span>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-red-500 block">BƯỚC 1</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Xoa dịu tức thì</span>
-            <p class="text-xs text-gray-500 editable-field">Xin lỗi vì trải nghiệm không vui, thể hiện sự đồng hành với lo lắng của khách.</p>
-          </div>
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-red-500 block">BƯỚC 2</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Đo lường lâm sàng</span>
-            <p class="text-xs text-gray-500 editable-field">Yêu cầu chụp cận cảnh làn da dưới ánh sáng thường để đánh giá mức độ.</p>
-          </div>
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-red-500 block">BƯỚC 3</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Xử lý theo cấp độ</span>
-            <p class="text-xs text-gray-500 editable-field">Hướng dẫn sơ cứu dừng sản phẩm, rửa nước muối sinh lý hoặc khuyên đi khám da liễu.</p>
-          </div>
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-red-500 block">BƯỚC 4</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Đổi trả &amp; Đền bù</span>
-            <p class="text-xs text-gray-500 editable-field">Kích hoạt chính sách hoàn tiền/thu hồi sản phẩm nếu do lỗi kích ứng hệ thống.</p>
-          </div>
-        </div>
-
-        <!-- Các nhánh cấp độ phản ứng da -->
-        <div class="p-4 border-t border-[#e4e2da] bg-gray-50/50 space-y-3">
-          <span class="text-xs font-bold text-gray-600 block uppercase tracking-wider">Bảng phân loại mức độ kích ứng da:</span>
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-            <div class="p-3 rounded-lg border border-emerald-200 bg-emerald-50/40">
-              <span class="text-xs font-bold text-emerald-800 block editable-field">Cấp độ 1: NHẸ</span>
-              <p class="text-xs text-gray-600 mt-1 editable-field">Châm chích nhẹ, ngứa thoáng qua dưới 15 phút. Hướng dẫn giãn tần suất dùng.</p>
-            </div>
-            <div class="p-3 rounded-lg border border-amber-200 bg-amber-50/40">
-              <span class="text-xs font-bold text-amber-800 block editable-field">Cấp độ 2: TRUNG BÌNH</span>
-              <p class="text-xs text-gray-600 mt-1 editable-field">Da nổi mẩn đỏ li ti dai dẳng, ngứa ngáy nhiều. Dừng toàn bộ dưỡng chất, chỉ dùng serum phục hồi B5.</p>
-            </div>
-            <div class="p-3 rounded-lg border border-red-200 bg-red-50/40">
-              <span class="text-xs font-bold text-red-800 block editable-field">Cấp độ 3: NẶNG</span>
-              <p class="text-xs text-gray-600 mt-1 editable-field">Da sưng nề, rát đỏ kèm mụn nước mủ. Chỉ định dừng ngay lập tức và khuyên khách đến phòng khám da liễu gần nhất.</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- LUỒNG 4 -->
-      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-        <div class="bg-amber-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
-          <span class="px-2.5 py-1 text-[11px] font-bold bg-amber-100 text-amber-800 rounded-md">LUỒNG 4</span>
-          <span class="font-bold text-gray-800 text-sm editable-field">Kiểm tra uy tín thương hiệu / Chất lượng hàng hóa</span>
-          <span class="text-xs text-amber-700 font-semibold ml-auto editable-field">Tương tác nhạy cảm</span>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 1</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Tuyệt đối không phản kháng</span>
-            <p class="text-xs text-gray-500 editable-field">Chào đón thắc mắc của khách bằng thái độ cảm thông: "Rất cảm ơn bạn đã cẩn thận hỏi thông tin này..."</p>
-          </div>
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Đưa bằng chứng trực quan</span>
-            <p class="text-xs text-gray-500 editable-field">Gửi hình ảnh giấy chứng nhận CO/CQ từ nhà sản xuất, tem chống giả, hóa đơn VAT nhập khẩu và mã quét barcode.</p>
-          </div>
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 3</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Hỗ trợ xác minh thêm</span>
-            <p class="text-xs text-gray-500 editable-field">Cam kết đền tiền 300% nếu phát hiện lỗi hàng giả, mời gọi tới hotline 098 805 1350 của công ty.</p>
-          </div>
-        </div>
-      </div>
-
-      <!-- LUỒNG 5 -->
-      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-        <div class="bg-gray-100 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
-          <span class="px-2.5 py-1 text-[11px] font-bold bg-gray-200 text-gray-800 rounded-md">LUỒNG 5</span>
-          <span class="font-bold text-gray-800 text-sm editable-field">Truy vấn trạng thái Đơn hàng / Vận chuyển / Đổi trả</span>
-          <span class="text-xs text-gray-500 font-semibold ml-auto editable-field">Thời hạn cam kết xử lý: 5 Phút</span>
-        </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 1</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Xin số điện thoại &amp; Mã đơn</span>
-            <p class="text-xs text-gray-500 editable-field">Hỏi nhanh thông tin cốt lõi để tra cứu hệ thống CRM ngay lập tức.</p>
-          </div>
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Xác minh &amp; Đưa lịch trình</span>
-            <p class="text-xs text-gray-500 editable-field">Thông báo đúng vị trí bưu cục hiện tại, tên hãng giao hàng và thời gian dự kiến nhận.</p>
-          </div>
-          <div class="p-4 space-y-1">
-            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 3</span>
-            <span class="text-xs font-bold text-gray-800 block editable-field">Xử lý bù đắp (Nếu trễ)</span>
-            <p class="text-xs text-gray-500 editable-field">Nếu lỗi giao chậm từ bưu điện, tặng ngay mã ưu đãi voucher cho đơn hàng kế tiếp.</p>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-  </div>
-</main>
-
-<!-- FOOTER -->
-<footer class="bg-white border-t border-[#e4e2da] py-6 text-center text-xs text-gray-400 mt-12 space-y-2">
-  <p>© ORI DERM · <a href="https://oriderm.com" class="hover:text-emerald-600">oriderm.com</a> · Hotline CSKH 098 805 1350</p>
-  <p>Tài liệu lưu hành nội bộ của Dược sĩ tư vấn · Cập nhật lần cuối ngày: <span id="lastUpdate" class="font-semibold text-gray-600">28/5/2026</span></p>
-</footer>
-
-<!-- MODAL XUẤT MÃ NGUỒN DỰ PHÒNG (TRÁNH LỖI TRÌNH DUYỆT CHẶN TẢI FILE TRONG IFRAME) -->
-<div class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden" id="sourceModal">
-  <div class="bg-white rounded-xl max-w-2xl w-full p-6 space-y-4 shadow-2xl relative">
-    <button onclick="closeSourceModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-lg"><i class="fa-solid fa-xmark"></i></button>
-    <div class="flex items-center gap-2 text-amber-600">
-      <i class="fa-solid fa-triangle-exclamation text-xl animate-bounce"></i>
-      <h3 class="font-bold text-lg">Mã nguồn của bạn đã sẵn sàng!</h3>
-    </div>
-    <p class="text-xs text-gray-600">Trình duyệt của bạn có thể đã chặn tải file trực tiếp (bảo mật Sandbox). Hãy <strong>bấm nút Sao chép code</strong> bên dưới và tự paste đè vào file HTML của bạn để lưu lại nhé!</p>
-    
-    <textarea id="rawSourceBox" class="w-full h-64 p-3 bg-gray-900 text-green-400 font-mono text-xs rounded-lg border border-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500" readonly=""></textarea>
-    
-    <div class="flex items-center justify-end gap-2">
-      <button onclick="copySourceCode()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-5 rounded-lg text-sm transition flex items-center gap-1.5 shadow-sm">
-        <i class="fa-solid fa-copy"></i> Sao chép toàn bộ code
-      </button>
-      <button onclick="closeSourceModal()" class="bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold py-2 px-4 rounded-lg text-sm transition">
-        Đóng lại
-      </button>
-    </div>
-  </div>
-</div>
-
-<script>
-  // Cài đặt hiển thị ngày cập nhật lần cuối
-  document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('vi-VN');
-
-  // Mảng lưu trữ trạng thái text dự phòng khi bấm Hủy
-  var originalTextStates = [];
-
-  // 1. KÍCH HOẠT CHẾ ĐỘ CHỈNH SỬA
-  function startEdit() {
-    document.body.classList.add('edit-mode');
-    
-    // Lưu trữ dự phòng toàn bộ text cũ
-    originalTextStates = [];
-    var fields = document.querySelectorAll('.editable-field');
-    fields.forEach(function(el) {
-      originalTextStates.push(el.innerHTML);
-      el.setAttribute('contenteditable', 'true');
-    });
-
-    document.getElementById('btnEdit').classList.add('hidden');
-    document.getElementById('btnEdit').classList.remove('flex');
-    document.getElementById('btnSave').classList.remove('hidden');
-    document.getElementById('btnSave').classList.add('flex');
-    document.getElementById('btnCancel').classList.remove('hidden');
-    document.getElementById('btnCancel').classList.add('flex');
-    
-    document.getElementById('barNotice').innerHTML = '<strong>Đang ở chế độ chỉnh sửa.</strong> Bạn hãy bấm vào các vùng có viền đứt nét để sửa trực tiếp hoặc thêm/xóa dòng tự do.';
-  }
-
-  // 2. HỦY BỎ CHỈNH SỬA & KHÔI PHỤC NỘI DUNG GỐC
-  function cancelEdit() {
-    document.body.classList.remove('edit-mode');
-    
-    var fields = document.querySelectorAll('.editable-field');
-    fields.forEach(function(el, index) {
-      el.setAttribute('contenteditable', 'false');
-      if (originalTextStates[index] !== undefined) {
-        el.innerHTML = originalTextStates[index];
-      }
-    });
-
-    restoreButtons();
-  }
-
-  // Khôi phục hiển thị thanh điều phối nút bấm
-  function restoreButtons() {
-    document.getElementById('btnEdit').classList.remove('hidden');
-    document.getElementById('btnEdit').classList.add('flex');
-    document.getElementById('btnSave').classList.add('hidden');
-    document.getElementById('btnSave').classList.remove('flex');
-    document.getElementById('btnCancel').classList.add('hidden');
-    document.getElementById('btnCancel').classList.remove('flex');
-    document.getElementById('barNotice').innerHTML = '<strong>Chế độ xem tài liệu.</strong> Bạn có thể chỉnh sửa trực tiếp nội dung bằng cách nhấn nút bên phải.';
-  }
-
-  // 3. THÊM DÒNG MỚI CHO BẢNG ĐỐI TƯỢNG KHÁCH HÀNG
-  function addNewTableRow() {
-    var tableBody = document.querySelector('#customerTable tbody');
-    var tr = document.createElement('tr');
-    
-    tr.innerHTML = `
-      <td class="px-5 py-4 font-medium text-gray-900 editable-field" contenteditable="true">Nhóm khách hàng mới...</td>
-      <td class="px-5 py-4 text-gray-600 editable-field" contenteditable="true">Dấu hiệu nhận biết đặc trưng...</td>
-      <td class="px-5 py-4"><span class="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full editable-field" contenteditable="true">Nhãn gọi khách</span></td>
-      <td class="px-5 py-4 text-gray-600 editable-field" contenteditable="true">Xưng hô</td>
-      <td class="px-5 py-4 text-center action-btn-delete flex justify-center items-center">
-        <button onclick="deleteTableRow(this)" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash-can"></i></button>
-      </td>
-    `;
-    
-    tableBody.appendChild(tr);
-  }
-
-  // Xóa dòng đối tượng khách hàng
-  function deleteTableRow(button) {
-    var tr = button.closest('tr');
-    if (tr) { tr.parentNode.removeChild(tr); }
-  }
-
-  // 4. THÊM QUY TẮC MỚI (NÊN DÙNG / KHÔNG NÊN DÙNG)
-  function addNewRule(type) {
-    var listContainer = (type === 'good') ? document.getElementById('goodRulesList') : document.getElementById('badRulesList');
-    var dotColorClass = (type === 'good') ? 'bg-emerald-500' : 'bg-red-500';
-    var textClass = (type === 'good') ? 'text-gray-900' : 'text-red-900';
-    
-    var li = document.createElement('li');
-    li.className = 'flex items-start gap-2.5 group';
-    li.innerHTML = `
-      <span class="w-1.5 h-1.5 ${dotColorClass} rounded-full mt-2 flex-shrink-0"></span>
-      <div class="flex-grow space-y-0.5">
-        <p class="text-sm font-semibold ${textClass} editable-field" contenteditable="true">"Nội dung quy tắc mới..."</p>
-        <p class="text-xs text-gray-400 editable-field" contenteditable="true">Mô tả hoặc ghi chú trường hợp áp dụng...</p>
-      </div>
-      <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
-    `;
-    
-    listContainer.appendChild(li);
-  }
-
-  // Xóa dòng quy tắc
-  function deleteRuleItem(button) {
-    var li = button.closest('li');
-    if (li) { li.parentNode.removeChild(li); }
-  }
-
-  // 5. HÀM LƯU FILE THÔNG MINH - CHẠY ĐƯỢC CẢ MÁY TÍNH LẪN TRÊN WEB
-  async function saveFile() {
-    document.body.classList.remove('edit-mode');
-    var fields = document.querySelectorAll('.editable-field');
-    fields.forEach(function(el) {
-      el.removeAttribute('contenteditable');
-    });
-
-    restoreButtons();
-    document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('vi-VN');
-
-    // Chuyển đổi giao diện hiện tại thành chuỗi HTML
-    var content = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-
-    // KIỂM TRA MÔI TRƯỜNG: Nếu đang chạy trên Web (Vercel) thì hiện luôn bảng copy code
-    if (window.location.hostname !== '127.0.0.1' && window.location.hostname !== 'localhost') {
-      document.getElementById('rawSourceBox').value = content;
-      document.getElementById('sourceModal').classList.remove('hidden');
-      return; // Thoát hàm luôn, không chạy đoạn mở hộp thoại máy tính bên dưới
-    }
-
-    // Nếu đang chạy dưới máy tính (Local) thì mở hộp thoại lưu đè trực tiếp cho tiện
-    if ('showSaveFilePicker' in window) {
-      try {
-        alert("Hệ thống chuẩn bị lưu file! Bạn hãy chọn đúng file index.html hiện tại trong thư mục và bấm Save để cập nhật trực tiếp nhé!");
-        const options = {
-          suggestedName: 'index.html',
-          types: [{
-            description: 'HTML Files',
-            accept: { 'text/html': ['.html'] },
-          }],
-        };
-        const handle = await window.showSaveFilePicker(options);
-        const writable = await handle.createWritable();
-        await writable.write(content);
-        await writable.close();
-        alert("Tuyệt vời! Tài liệu kịch bản tư vấn đã được cập nhật trực tiếp thành công!");
-        return;
-      } catch (err) {
-        console.log("Hủy lưu hoặc trình duyệt không hỗ trợ: ", err);
-      }
-    }
-
-    // Phương án dự phòng cuối cùng
-    document.getElementById('rawSourceBox').value = content;
-    document.getElementById('sourceModal').classList.remove('hidden');
-  }
+</body>
+</html>
