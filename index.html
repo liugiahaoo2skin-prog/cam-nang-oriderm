@@ -90,7 +90,7 @@
         <svg class="w-6 h-6 text-white fill-none stroke-current" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
       </div>
       <div>
-        <h1 class="font-bold text-lg tracking-tight text-gray-900 editable-field" id="brandName">ORI DERM - CẨM NANG CSKH</h1>
+        <h1 class="font-bold text-lg tracking-tight text-gray-900 editable-field" id="brandName">ORI DERM</h1>
         <p class="text-xs text-gray-500 editable-field" id="docSub">Bộ tiêu chuẩn giao tiếp khách hàng &amp; Cẩm nang xử lý Chat</p>
       </div>
     </div>
@@ -346,7 +346,21 @@
                   </div>
                   <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
                 </li>
-              </ul>
+              <li class="flex items-start gap-2.5 group">
+      <span class="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></span>
+      <div class="flex-grow space-y-0.5">
+        <p class="text-sm font-semibold text-red-900 editable-field">"Nội dung quy tắc mới..."</p>
+        <p class="text-xs text-gray-400 editable-field">Mô tả hoặc ghi chú trường hợp áp dụng...</p>
+      </div>
+      <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
+    </li><li class="flex items-start gap-2.5 group">
+      <span class="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></span>
+      <div class="flex-grow space-y-0.5">
+        <p class="text-sm font-semibold text-red-900 editable-field">"Nội dung quy tắc mới..."</p>
+        <p class="text-xs text-gray-400 editable-field">Mô tả hoặc ghi chú trường hợp áp dụng...</p>
+      </div>
+      <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
+    </li></ul>
             </div>
             
             <button onclick="addNewRule('bad')" class="action-btn-add w-full border border-dashed border-red-300 hover:border-red-500 text-red-700 font-semibold text-xs py-2 px-4 rounded-lg flex items-center justify-center gap-1.5 transition mt-4 bg-red-50/50">
@@ -683,7 +697,7 @@
     if (li) { li.parentNode.removeChild(li); }
   }
 
-  // 5. HÀM LƯU FILE TỰ ĐỘNG CẬP NHẬT THẲNG VÀO FILE CŨ
+  // 5. HÀM LƯU FILE THÔNG MINH - CHẠY ĐƯỢC CẢ MÁY TÍNH LẪN TRÊN WEB
   async function saveFile() {
     document.body.classList.remove('edit-mode');
     var fields = document.querySelectorAll('.editable-field');
@@ -694,13 +708,22 @@
     restoreButtons();
     document.getElementById('lastUpdate').textContent = new Date().toLocaleDateString('vi-VN');
 
+    // Chuyển đổi giao diện hiện tại thành chuỗi HTML
     var content = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
 
+    // KIỂM TRA MÔI TRƯỜNG: Nếu đang chạy trên Web (Vercel) thì hiện luôn bảng copy code
+    if (window.location.hostname !== '127.0.0.1' && window.location.hostname !== 'localhost') {
+      document.getElementById('rawSourceBox').value = content;
+      document.getElementById('sourceModal').classList.remove('hidden');
+      return; // Thoát hàm luôn, không chạy đoạn mở hộp thoại máy tính bên dưới
+    }
+
+    // Nếu đang chạy dưới máy tính (Local) thì mở hộp thoại lưu đè trực tiếp cho tiện
     if ('showSaveFilePicker' in window) {
       try {
-        alert("Hệ thống chuẩn bị lưu file! Bạn hãy chọn đúng file INDEX.HTML hiện tại trong thư mục và bấm Save (Lưu đè) để cập nhật trực tiếp nhé!");
+        alert("Hệ thống chuẩn bị lưu file! Bạn hãy chọn đúng file index.html hiện tại trong thư mục và bấm Save để cập nhật trực tiếp nhé!");
         const options = {
-          suggestedName: 'INDEX.HTML',
+          suggestedName: 'index.html',
           types: [{
             description: 'HTML Files',
             accept: { 'text/html': ['.html'] },
@@ -717,31 +740,7 @@
       }
     }
 
-    // Dự phòng nếu lỗi công nghệ
+    // Phương án dự phòng cuối cùng
     document.getElementById('rawSourceBox').value = content;
     document.getElementById('sourceModal').classList.remove('hidden');
   }
-
-  // Đóng hộp thoại Modal dự phòng
-  function closeSourceModal() {
-    document.getElementById('sourceModal').classList.add('hidden');
-  }
-
-  // Copy code từ Textarea ra clipboard nhanh chóng
-  function copySourceCode() {
-    var textBox = document.getElementById('rawSourceBox');
-    textBox.select();
-    textBox.setSelectionRange(0, 99999);
-    
-    try {
-      document.execCommand('copy');
-      alert("Đã sao chép thành công toàn bộ mã nguồn! Hãy dán đè vào file HTML của bạn và lưu lại nhé!");
-      closeSourceModal();
-    } catch(err) {
-      alert("Không thể tự động sao chép. Bạn hãy tự bôi đen và copy nhé!");
-    }
-  }
-</script>
-
-
-</body></html>
