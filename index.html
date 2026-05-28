@@ -70,11 +70,11 @@
         </button>
         
         <button onclick="switchScreen('man-hinh-moi-1')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
-          <i class="fa-solid fa-notes-medical w-5 text-left"></i> Điều Phối Phòng Khám
+          <i class="fa-solid fa-notes-medical w-5 text-left"></i> Mẫu tin nhắn CSKH 
         </button>
         
         <button onclick="switchScreen('man-hinh-moi-2')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
-          <i class="fa-solid fa-boxes-stacked w-5 text-left"></i> Quản Lý Kho Hàng
+          <i class="fa-solid fa-boxes-stacked w-5 text-left"></i> Quản lý danh mục drive
         </button>
 
         <button onclick="switchScreen('man-hinh-moi-3')" class="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-100 hover:text-gray-900 transition">
@@ -118,200 +118,432 @@
     
     <div id="screen-kich-ban-cu" class="screen-content space-y-8">
 
-      <section class="space-y-4">
-        <div class="flex items-center gap-3">
-          <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-sm">1</span>
-          <h2 class="text-sm font-bold tracking-wider text-gray-500 uppercase">Tiêu chuẩn xưng hô — Phía Ori Derm tự xưng</h2>
-        </div>
-        <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-          <div class="bg-emerald-50 border-b border-[#e4e2da] px-5 py-3 flex items-center gap-2">
-            <i class="fa-solid fa-user-doctor text-emerald-700 text-lg"></i>
-            <span class="font-bold text-gray-800 text-sm">Cách tự giới thiệu & xưng hô theo từng ngữ cảnh tư vấn</span>
-            <span class="text-xs text-gray-400 ml-auto">Quy tắc vàng: "Dược sĩ tư vấn"</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da]">
-            <div class="p-4 space-y-2">
-              <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Mở đầu cuộc chat</span>
-              <span class="text-sm font-bold text-gray-800 block">Dược sĩ tư vấn</span>
-              <p class="text-xs text-gray-500 leading-relaxed">"Dược sĩ tư vấn Ori Derm xin chào và hỗ trợ bạn..."</p>
-            </div>
-            <div class="p-4 space-y-2">
-              <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Khi tư vấn chuyên môn</span>
-              <span class="text-sm font-bold text-gray-800 block">Mình / Bên mình</span>
-              <p class="text-xs text-gray-500 leading-relaxed">"Với tình trạng này, mình nghĩ da bạn nên..."</p>
-            </div>
-            <div class="p-4 space-y-2">
-              <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Khi đại diện thương hiệu</span>
-              <span class="text-sm font-bold text-gray-800 block">Ori Derm</span>
-              <p class="text-xs text-gray-500 leading-relaxed">"Ori Derm luôn cam kết cung cấp sản phẩm chính hãng..."</p>
-            </div>
-            <div class="p-4 space-y-2 bg-red-50/50">
-              <span class="text-[10px] font-bold text-red-500 uppercase tracking-wider block">Tuyệt đối KHÔNG dùng</span>
-              <span class="text-sm font-bold text-red-700 block">Shop / Em / Tôi</span>
-              <p class="text-xs text-gray-500 leading-relaxed">Tránh tạo cảm giác thiếu chuyên nghiệp hoặc quá khô khan.</p>
-            </div>
-          </div>
-        </div>
-      </section>
+      <!-- PHẦN 1: CÁCH TỰ XƯNG -->
+    <section class="space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-sm">1</span>
+        <h2 class="text-sm font-bold tracking-wider text-gray-500 uppercase editable-field">Tiêu chuẩn xưng hô — Phía Ori Derm tự xưng</h2>
+      </div>
 
-      <section class="space-y-4">
-        <div class="flex items-center gap-3">
-          <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-sm">2</span>
-          <h2 class="text-sm font-bold tracking-wider text-gray-500 uppercase">Xưng hô với khách — Linh hoạt theo từng đối tượng</h2>
+      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
+        <div class="bg-emerald-50 border-b border-[#e4e2da] px-5 py-3 flex items-center gap-2">
+          <i class="fa-solid fa-user-doctor text-emerald-700 text-lg"></i>
+          <span class="font-bold text-gray-800 text-sm editable-field">Cách tự giới thiệu &amp; xưng hô theo từng ngữ cảnh tư vấn</span>
+          <span class="text-xs text-gray-400 ml-auto editable-field">Quy tắc vàng: "Dược sĩ tư vấn"</span>
         </div>
-        <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-          <div class="bg-blue-50 border-b border-[#e4e2da] px-5 py-3 flex items-center gap-2">
-            <i class="fa-solid fa-users text-blue-700 text-lg"></i>
-            <span class="font-bold text-gray-800 text-sm">Nhận diện khách hàng qua tin nhắn để xưng hô chuẩn xác</span>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da]">
+          <!-- Khung chat mở đầu -->
+          <div class="p-4 space-y-2">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Mở đầu cuộc chat</span>
+            <span class="text-sm font-bold text-gray-800 block editable-field">Dược sĩ tư vấn</span>
+            <p class="text-xs text-gray-500 leading-relaxed editable-field">"Dược sĩ tư vấn Ori Derm xin chào và hỗ trợ bạn..."</p>
           </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm">
-              <thead class="bg-gray-50 border-b border-[#e4e2da] text-xs font-bold text-gray-500 uppercase">
-                <tr>
-                  <th class="px-5 py-3">Nhóm đối tượng</th>
-                  <th class="px-5 py-3">Dấu hiệu nhận biết</th>
-                  <th class="px-5 py-3">Gọi khách là</th>
-                  <th class="px-5 py-3">Tự xưng là</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-[#e4e2da]">
-                <tr>
-                  <td class="px-5 py-4 font-medium text-gray-900">Gen Z / Khách hàng trẻ</td>
-                  <td class="px-5 py-4 text-gray-600">Nhắn "bạn ơi", dùng từ lóng, viết tắt tự nhiên, icons vui nhộn</td>
-                  <td class="px-5 py-4"><span class="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full">Bạn</span></td>
-                  <td class="px-5 py-4 text-gray-600">Mình</td>
-                </tr>
-                <tr>
-                  <td class="px-5 py-4 font-medium text-gray-900">Millennials / Từ 25–35 tuổi</td>
-                  <td class="px-5 py-4 text-gray-600">Trao đổi lịch sự, hỏi thẳng vấn đề, chưa rõ độ tuổi cụ thể</td>
-                  <td class="px-5 py-4"><span class="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full">Bạn</span> <span class="text-xs text-gray-400">hoặc</span> <span class="px-3 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded-full">Anh / Chị</span></td>
-                  <td class="px-5 py-4 text-gray-600">Mình / Bên mình</td>
-                </tr>
-                <tr>
-                  <td class="px-5 py-4 font-medium text-gray-900">Trung niên / Trên 35 tuổi</td>
-                  <td class="px-5 py-4 text-gray-600">Chủ động xưng Anh/Chị, trao đổi cực kỳ trang trọng và kỹ lưỡng</td>
-                  <td class="px-5 py-4"><span class="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full">Anh / Chị</span></td>
-                  <td class="px-5 py-4 text-gray-600">Em / Bên mình</td>
-                </tr>
-              </tbody>
-            </table>
+          <!-- Tư vấn chuyên môn -->
+          <div class="p-4 space-y-2">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Khi tư vấn chuyên môn</span>
+            <span class="text-sm font-bold text-gray-800 block editable-field">Mình / Bên mình</span>
+            <p class="text-xs text-gray-500 leading-relaxed editable-field">"Với tình trạng này, mình nghĩ da bạn nên..."</p>
+          </div>
+          <!-- Đại diện thương hiệu -->
+          <div class="p-4 space-y-2">
+            <span class="text-[10px] font-bold text-gray-400 uppercase tracking-wider block">Khi đại diện thương hiệu</span>
+            <span class="text-sm font-bold text-gray-800 block editable-field">Ori Derm</span>
+            <p class="text-xs text-gray-500 leading-relaxed editable-field">"Ori Derm luôn cam kết cung cấp sản phẩm chính hãng..."</p>
+          </div>
+          <!-- Tuyệt đối cấm dùng -->
+          <div class="p-4 space-y-2 bg-red-50/50">
+            <span class="text-[10px] font-bold text-red-500 uppercase tracking-wider block">Tuyệt đối KHÔNG dùng</span>
+            <span class="text-sm font-bold text-red-700 block editable-field">Shop / Em / Tôi</span>
+            <p class="text-xs text-gray-500 leading-relaxed editable-field">Tránh tạo cảm giác thiếu chuyên nghiệp hoặc quá khô khan.</p>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
 
-      <section class="space-y-4">
-        <div class="flex items-center gap-3">
-          <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-sm">3</span>
-          <h2 class="text-sm font-bold tracking-wider text-gray-500 uppercase">Quy ước ngôn từ chuyên nghiệp — Nên dùng & Tuyệt đối cấm</h2>
+    <!-- PHẦN 2: XƯNG HÔ VỚI KHÁCH HÀNG -->
+    <section class="space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-sm">2</span>
+        <h2 class="text-sm font-bold tracking-wider text-gray-500 uppercase editable-field">Xưng hô với khách — Linh hoạt theo từng đối tượng</h2>
+      </div>
+
+      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
+        <div class="bg-blue-50 border-b border-[#e4e2da] px-5 py-3 flex items-center gap-2">
+          <i class="fa-solid fa-users text-blue-700 text-lg"></i>
+          <span class="font-bold text-gray-800 text-sm editable-field">Nhận diện khách hàng qua tin nhắn để xưng hô chuẩn xác</span>
         </div>
-        <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-          <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da]">
-            <div class="p-5 space-y-4">
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm" id="customerTable">
+            <thead class="bg-gray-50 border-b border-[#e4e2da] text-xs font-bold text-gray-500 uppercase">
+              <tr>
+                <th class="px-5 py-3">Nhóm đối tượng</th>
+                <th class="px-5 py-3">Dấu hiệu nhận biết</th>
+                <th class="px-5 py-3">Gọi khách là</th>
+                <th class="px-5 py-3">Tự xưng là</th>
+                <th class="px-5 py-3 w-16 action-btn-delete">Xóa</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-[#e4e2da]">
+              <tr>
+                <td class="px-5 py-4 font-medium text-gray-900 editable-field">Gen Z / Khách hàng trẻ</td>
+                <td class="px-5 py-4 text-gray-600 editable-field">Nhắn "bạn ơi", dùng từ lóng, viết tắt tự nhiên, icons vui nhộn</td>
+                <td class="px-5 py-4"><span class="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full editable-field">Bạn</span></td>
+                <td class="px-5 py-4 text-gray-600 editable-field">Mình</td>
+                <td class="px-5 py-4 text-center action-btn-delete">
+                  <button onclick="deleteTableRow(this)" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash-can"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td class="px-5 py-4 font-medium text-gray-900 editable-field">Millennials / Từ 25–35 tuổi</td>
+                <td class="px-5 py-4 text-gray-600 editable-field">Trao đổi lịch sự, hỏi thẳng vấn đề, chưa rõ độ tuổi cụ thể</td>
+                <td class="px-5 py-4"><span class="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full editable-field">Bạn</span> <span class="text-xs text-gray-400">hoặc</span> <span class="px-3 py-1 text-xs font-semibold bg-gray-100 text-gray-800 rounded-full editable-field">Anh / Chị</span></td>
+                <td class="px-5 py-4 text-gray-600 editable-field">Mình / Bên mình</td>
+                <td class="px-5 py-4 text-center action-btn-delete">
+                  <button onclick="deleteTableRow(this)" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash-can"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td class="px-5 py-4 font-medium text-gray-900 editable-field">Trung niên / Trên 35 tuổi</td>
+                <td class="px-5 py-4 text-gray-600 editable-field">Chủ động xưng Anh/Chị, trao đổi cực kỳ trang trọng và kỹ lưỡng</td>
+                <td class="px-5 py-4"><span class="px-3 py-1 text-xs font-semibold bg-blue-100 text-blue-800 rounded-full editable-field">Anh / Chị</span></td>
+                <td class="px-5 py-4 text-gray-600 editable-field">Em / Bên mình</td>
+                <td class="px-5 py-4 text-center action-btn-delete">
+                  <button onclick="deleteTableRow(this)" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash-can"></i></button>
+                </td>
+              </tr>
+              <tr>
+                <td class="px-5 py-4 font-medium text-gray-900 editable-field">Chưa xác định</td>
+                <td class="px-5 py-4 text-gray-600 editable-field">Tin nhắn đầu tiên cực ngắn, không có tín hiệu ngữ cảnh rõ ràng</td>
+                <td class="px-5 py-4"><span class="px-3 py-1 text-xs font-semibold bg-emerald-100 text-emerald-800 rounded-full editable-field">Bạn (mặc định)</span></td>
+                <td class="px-5 py-4 text-gray-600 editable-field">Mình</td>
+                <td class="px-5 py-4 text-center action-btn-delete">
+                  <button onclick="deleteTableRow(this)" class="text-red-600 hover:text-red-800"><i class="fa-solid fa-trash-can"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- Nút thêm dòng đối tượng trong chế độ Chỉnh sửa -->
+        <div class="p-3 bg-gray-50 border-t border-[#e4e2da] text-center action-btn-add">
+          <button onclick="addNewTableRow()" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-1.5 px-4 rounded-md shadow-sm transition flex items-center gap-1.5 mx-auto">
+            <i class="fa-solid fa-plus"></i> Thêm nhóm đối tượng mới
+          </button>
+        </div>
+
+        <div class="bg-blue-50/50 px-5 py-3 border-t border-[#e4e2da] flex gap-3 text-xs text-blue-900">
+          <i class="fa-solid fa-circle-info text-blue-600 mt-0.5 text-sm"></i>
+          <span class="editable-field"><strong>Quy chuẩn bắt buộc:</strong> Khi đã xác định được cách gọi tên phù hợp, <strong>phải giữ sự nhất quán 100% đến hết cuộc hội thoại.</strong> Tuyệt đối không tự ý chuyển đổi xưng hô đột ngột giữa "Bạn" và "Chị" trong cùng một phiên chat.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PHẦN 3: NÊN DÙNG & KHÔNG DÙNG -->
+    <section class="space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-sm">3</span>
+        <h2 class="text-sm font-bold tracking-wider text-gray-500 uppercase editable-field">Quy ước ngôn từ chuyên nghiệp — Nên dùng &amp; Tuyệt đối cấm</h2>
+      </div>
+
+      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
+        <div class="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da]">
+          
+          <!-- CỘT NÊN DÙNG -->
+          <div class="p-5 space-y-4 flex flex-col justify-between">
+            <div>
               <div class="flex items-center gap-2 pb-3 border-b border-[#e4e2da] text-emerald-700 font-bold uppercase tracking-wider text-xs">
-                <i class="fa-solid fa-circle-check text-base"></i><span>✓ Nên sử dụng linh hoạt</span>
+                <i class="fa-solid fa-circle-check text-base"></i>
+                <span class="editable-field">✓ Nên sử dụng linh hoạt</span>
               </div>
-              <ul class="space-y-3 pt-2">
-                <li class="text-sm text-gray-900">"Với tình trạng da bạn vừa mô tả..."</li>
-                <li class="text-sm text-gray-900">"Thành phần hoạt chất X giúp cải thiện Y nhờ..."</li>
+              
+              <ul class="space-y-4 pt-4" id="goodRulesList">
+                <li class="flex items-start gap-2.5 group">
+                  <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></span>
+                  <div class="flex-grow space-y-0.5">
+                    <p class="text-sm font-semibold text-gray-900 editable-field">"Với tình trạng da bạn vừa mô tả..."</p>
+                    <p class="text-xs text-gray-400 editable-field">Tăng tính cá nhân hóa, thể hiện sự lắng nghe kỹ.</p>
+                  </div>
+                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
+                </li>
+                <li class="flex items-start gap-2.5 group">
+                  <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></span>
+                  <div class="flex-grow space-y-0.5">
+                    <p class="text-sm font-semibold text-gray-900 editable-field">"Thành phần hoạt chất X giúp cải thiện Y nhờ cơ chế..."</p>
+                    <p class="text-xs text-gray-400 editable-field">Sử dụng chuyên môn y khoa chính thống để tăng uy tín.</p>
+                  </div>
+                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
+                </li>
+                <li class="flex items-start gap-2.5 group">
+                  <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></span>
+                  <div class="flex-grow space-y-0.5">
+                    <p class="text-sm font-semibold text-gray-900 editable-field">"Mình đề xuất bạn cân nhắc thêm giải pháp..."</p>
+                    <p class="text-xs text-gray-400 editable-field">Khơi gợi giải pháp nhẹ nhàng, không chèo kéo ép khách mua.</p>
+                  </div>
+                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
+                </li>
+                <li class="flex items-start gap-2.5 group">
+                  <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mt-2 flex-shrink-0"></span>
+                  <div class="flex-grow space-y-0.5">
+                    <p class="text-sm font-semibold text-gray-900 editable-field">"Mình rất tiếc và hiểu cảm giác của bạn lúc này..."</p>
+                    <p class="text-xs text-gray-400 editable-field">Tuyệt đối cần dùng để đồng cảm khi bắt đầu xử lý khiếu nại.</p>
+                  </div>
+                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
+                </li>
               </ul>
             </div>
-            <div class="p-5 space-y-4 bg-red-50/20">
+            
+            <button onclick="addNewRule('good')" class="action-btn-add w-full border border-dashed border-emerald-300 hover:border-emerald-500 text-emerald-700 font-semibold text-xs py-2 px-4 rounded-lg flex items-center justify-center gap-1.5 transition mt-4 bg-emerald-50/50">
+              <i class="fa-solid fa-plus"></i> Thêm khuyến nghị "Nên Dùng"
+            </button>
+          </div>
+
+          <!-- CỘT CẤM DÙNG -->
+          <div class="p-5 space-y-4 flex flex-col justify-between bg-red-50/20">
+            <div>
               <div class="flex items-center gap-2 pb-3 border-b border-[#e4e2da] text-red-700 font-bold uppercase tracking-wider text-xs">
-                <i class="fa-solid fa-circle-xmark text-base"></i><span>✗ Tuyệt đối CẤM sử dụng</span>
+                <i class="fa-solid fa-circle-xmark text-base"></i>
+                <span class="editable-field">✗ Tuyệt đối CẤM sử dụng</span>
               </div>
-              <ul class="space-y-3 pt-2">
-                <li class="text-sm text-red-900 font-semibold">"Trị dứt điểm hoàn toàn / Cam kết 100%..."</li>
-                <li class="text-sm text-red-900 font-semibold">"Bên shop khác bán toàn là hàng fake đó..."</li>
+              
+              <ul class="space-y-4 pt-4" id="badRulesList">
+                <li class="flex items-start gap-2.5 group">
+                  <span class="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></span>
+                  <div class="flex-grow space-y-0.5">
+                    <p class="text-sm font-semibold text-red-900 editable-field">"Trị dứt điểm hoàn toàn / Cam kết 100%..."</p>
+                    <p class="text-xs text-gray-400 editable-field">Cấm đoán: Sai lệch bản chất khoa học của ngành da liễu.</p>
+                  </div>
+                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
+                </li>
+                <li class="flex items-start gap-2.5 group">
+                  <span class="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></span>
+                  <div class="flex-grow space-y-0.5">
+                    <p class="text-sm font-semibold text-red-900 editable-field">"Bên shop khác bán toàn là hàng fake đó..."</p>
+                    <p class="text-xs text-gray-400 editable-field">Hành vi hạ bệ, dèm pha đối thủ làm mất uy tín thương hiệu.</p>
+                  </div>
+                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
+                </li>
+                <li class="flex items-start gap-2.5 group">
+                  <span class="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></span>
+                  <div class="flex-grow space-y-0.5">
+                    <p class="text-sm font-semibold text-red-900 editable-field">"Do bạn tự dùng sai hướng dẫn nên mới bị..."</p>
+                    <p class="text-xs text-gray-400 editable-field">Tối kỵ đổ lỗi cho khách hàng trước khi tìm hiểu rõ căn nguyên.</p>
+                  </div>
+                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
+                </li>
+                <li class="flex items-start gap-2.5 group">
+                  <span class="w-1.5 h-1.5 bg-red-500 rounded-full mt-2 flex-shrink-0"></span>
+                  <div class="flex-grow space-y-0.5">
+                    <p class="text-sm font-semibold text-red-900 editable-field">"Cái này mình cũng không rõ/không biết nữa..."</p>
+                    <p class="text-xs text-gray-400 editable-field">Nếu chưa rõ, phải xin phép kiểm tra rồi phản hồi lại ngay sau đó.</p>
+                  </div>
+                  <button onclick="deleteRuleItem(this)" class="text-red-500 hover:text-red-700 ml-auto text-xs action-btn-delete"><i class="fa-solid fa-trash"></i></button>
+                </li>
               </ul>
             </div>
+            
+            <button onclick="addNewRule('bad')" class="action-btn-add w-full border border-dashed border-red-300 hover:border-red-500 text-red-700 font-semibold text-xs py-2 px-4 rounded-lg flex items-center justify-center gap-1.5 transition mt-4 bg-red-50/50">
+              <i class="fa-solid fa-plus"></i> Thêm điều cấm "Không Nên Dùng"
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- PHẦN 4: 5 LUỒNG PHÂN LOẠI CHAT -->
+    <section class="space-y-4">
+      <div class="flex items-center gap-3">
+        <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-sm">4</span>
+        <h2 class="text-sm font-bold tracking-wider text-gray-500 uppercase editable-field">Phân luồng tư vấn — 5 tình huống phản hồi tiêu chuẩn</h2>
+      </div>
+
+      <!-- LUỒNG 1 -->
+      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
+        <div class="bg-emerald-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
+          <span class="px-2.5 py-1 text-[11px] font-bold bg-emerald-100 text-emerald-800 rounded-md">LUỒNG 1</span>
+          <span class="font-bold text-gray-800 text-sm editable-field">Khách tìm hiểu sản phẩm cụ thể</span>
+          <span class="text-xs text-emerald-700 font-semibold ml-auto editable-field">Tỷ lệ gặp: 70%</span>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 1</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Đọc hiểu tâm lý</span>
+            <p class="text-xs text-gray-500 editable-field">Nhận diện tông giọng khách để điều chỉnh xưng hô ngay từ câu đầu.</p>
+          </div>
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2A</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Có tên SP?</span>
+            <p class="text-xs text-gray-500 editable-field">Cung cấp công dụng cốt lõi, cơ chế dùng và các điểm lưu ý đặc biệt.</p>
+          </div>
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2B</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Chưa có SP?</span>
+            <p class="text-xs text-gray-500 editable-field">Hỏi ngay 3 câu hỏi sàng lọc chuyên sâu (Loại da, vấn đề, thói quen).</p>
+          </div>
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 3</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Đóng gói tư vấn</span>
+            <p class="text-xs text-gray-500 editable-field">Đưa ra routine gợi ý kèm giải thích rõ vì sao da họ cần hoạt chất đó.</p>
           </div>
         </div>
-      </section>
 
-      <section class="space-y-4">
-        <div class="flex items-center gap-3">
-          <span class="w-8 h-8 rounded-full bg-gray-900 text-white flex items-center justify-center font-bold text-sm">4</span>
-          <h2 class="text-sm font-bold tracking-wider text-gray-500 uppercase">Phân luồng tư vấn — 5 tình huống phản hồi tiêu chuẩn</h2>
+        <div class="bg-emerald-50/30 px-5 py-2.5 border-t border-[#e4e2da] flex gap-2 text-xs text-emerald-800">
+          <i class="fa-solid fa-lightbulb text-emerald-600 mt-0.5"></i>
+          <span class="editable-field"><strong>Mẹo Dược sĩ:</strong> 3 Câu hỏi chẩn đoán nhanh bao gồm: <strong>Loại da hiện tại</strong>, <strong>Vấn đề da khó chịu nhất</strong>, <strong>Sản phẩm đang dùng kết hợp</strong>.</span>
+        </div>
+      </div>
+
+      <!-- LUỒNG 2 -->
+      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
+        <div class="bg-blue-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
+          <span class="px-2.5 py-1 text-[11px] font-bold bg-blue-100 text-blue-800 rounded-md">LUỒNG 2</span>
+          <span class="font-bold text-gray-800 text-sm editable-field">Tư vấn Routine chuyên sâu cá nhân hóa</span>
+          <span class="text-xs text-blue-700 font-semibold ml-auto editable-field">Giữ chân &amp; Tăng tỷ lệ mua</span>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
+          <div class="p-3.5 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 1</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Lập hồ sơ bệnh lý</span>
+            <p class="text-xs text-gray-500 editable-field">Hỏi về tiền sử kích ứng da, ngân sách và thói quen sinh hoạt.</p>
+          </div>
+          <div class="p-3.5 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Thiết lập Routine</span>
+            <p class="text-xs text-gray-500 editable-field">Chia rõ các bước Sáng &amp; Tối, thứ tự layer trước/sau cụ thể.</p>
+          </div>
+          <div class="p-3.5 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 3</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Khuyến cáo xung khắc</span>
+            <p class="text-xs text-gray-500 editable-field">Chỉ rõ những hoạt chất KHÔNG được mix chung (như Retinol + BHA).</p>
+          </div>
+          <div class="p-3.5 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 4</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Kiến thức khoa học</span>
+            <p class="text-xs text-gray-500 editable-field">Chia sẻ link phân tích chuyên môn của oriderm.com để khách đọc thêm.</p>
+          </div>
+          <div class="p-3.5 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 5</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Hẹn ngày tái khám</span>
+            <p class="text-xs text-gray-500 editable-field">Chủ động đề xuất theo dõi, nhắn lại hỏi han sau 14 ngày sử dụng.</p>
+          </div>
+        </div>
+      </div>
+
+<!-- LUỒNG 3 -->
+      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
+        <div class="bg-red-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
+          <span class="px-2.5 py-1 text-[11px] font-bold bg-red-100 text-red-800 rounded-md">LUỒNG 3</span>
+          <span class="font-bold text-red-950 text-sm editable-field">Giải quyết khiếu nại kích ứng / Dị ứng da</span>
+          <span class="text-xs text-red-700 font-semibold ml-auto editable-field">QUY TRÌNH KHẨN CẤP</span>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-red-500 block">BƯỚC 1</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Xoa dịu tức thì</span>
+            <p class="text-xs text-gray-500 editable-field">Xin lỗi vì trải nghiệm không vui, thể hiện sự đồng hành với lo lắng của khách.</p>
+          </div>
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-red-500 block">BƯỚC 2</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Đo lường lâm sàng</span>
+            <p class="text-xs text-gray-500 editable-field">Yêu cầu chụp cận cảnh làn da dưới ánh sáng thường để đánh giá mức độ.</p>
+          </div>
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-red-500 block">BƯỚC 3</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Xử lý theo cấp độ</span>
+            <p class="text-xs text-gray-500 editable-field">Hướng dẫn sơ cứu dừng sản phẩm, rửa nước muối sinh lý hoặc khuyên đi khám da liễu.</p>
+          </div>
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-red-500 block">BƯỚC 4</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Đổi trả &amp; Đền bù</span>
+            <p class="text-xs text-gray-500 editable-field">Kích hoạt chính sách hoàn tiền/thu hồi sản phẩm nếu do lỗi kích ứng hệ thống.</p>
+          </div>
         </div>
 
-        <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-          <div class="bg-emerald-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
-            <span class="px-2.5 py-1 text-[11px] font-bold bg-emerald-100 text-emerald-800 rounded-md">LUỒNG 1</span>
-            <span class="font-bold text-gray-800 text-sm">Khách tìm hiểu sản phẩm cụ thể</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
-            <div class="p-4"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 1</span><span class="text-xs font-bold text-gray-800 block">Đọc hiểu tâm lý</span></div>
-            <div class="p-4"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2A</span><span class="text-xs font-bold text-gray-800 block">Có tên SP?</span></div>
-            <div class="p-4"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2B</span><span class="text-xs font-bold text-gray-800 block">Chưa có SP?</span></div>
-            <div class="p-4"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 3</span><span class="text-xs font-bold text-gray-800 block">Đóng gói tư vấn</span></div>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-          <div class="bg-blue-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
-            <span class="px-2.5 py-1 text-[11px] font-bold bg-blue-100 text-blue-800 rounded-md">LUỒNG 2</span>
-            <span class="font-bold text-gray-800 text-sm">Tư vấn Routine chuyên sâu cá nhân hóa</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-5 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
-            <div class="p-3.5"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 1</span><span class="text-xs font-bold text-gray-800 block">Lập hồ sơ</span></div>
-            <div class="p-3.5"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2</span><span class="text-xs font-bold text-gray-800 block">Thiết lập Routine</span></div>
-            <div class="p-3.5"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 3</span><span class="text-xs font-bold text-gray-800 block">Khuyến cáo</span></div>
-            <div class="p-3.5"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 4</span><span class="text-xs font-bold text-gray-800 block">Kiến thức</span></div>
-            <div class="p-3.5"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 5</span><span class="text-xs font-bold text-gray-800 block">Hẹn tái khám</span></div>
-          </div>
-        </div>
-
-        <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-          <div class="bg-red-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
-            <span class="px-2.5 py-1 text-[11px] font-bold bg-red-100 text-red-800 rounded-md">LUỒNG 3</span>
-            <span class="font-bold text-red-950 text-sm">Giải quyết khiếu nại kích ứng / Dị ứng da</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-4 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
-            <div class="p-4"><span class="text-[10px] font-bold text-red-500 block">BƯỚC 1</span><span class="text-xs font-bold text-gray-800 block">Xoa dịu tức thì</span></div>
-            <div class="p-4"><span class="text-[10px] font-bold text-red-500 block">BƯỚC 2</span><span class="text-xs font-bold text-gray-800 block">Đo lường lâm sàng</span></div>
-            <div class="p-4"><span class="text-[10px] font-bold text-red-500 block">BƯỚC 3</span><span class="text-xs font-bold text-gray-800 block">Xử lý theo cấp độ</span></div>
-            <div class="p-4"><span class="text-[10px] font-bold text-red-500 block">BƯỚC 4</span><span class="text-xs font-bold text-gray-800 block">Đổi trả & Đền bù</span></div>
-          </div>
-          <div class="p-4 border-t border-[#e4e2da] bg-gray-50/50 space-y-3">
-            <span class="text-xs font-bold text-gray-600 block uppercase tracking-wider">Bảng phân loại mức độ kích ứng da:</span>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
-              <div class="p-3 rounded-lg border border-emerald-200 bg-emerald-50/40"><span class="text-xs font-bold text-emerald-800 block">Cấp độ 1: NHẸ</span><p class="text-xs text-gray-600 mt-1">Châm chích nhẹ, ngứa dưới 15 phút.</p></div>
-              <div class="p-3 rounded-lg border border-amber-200 bg-amber-50/40"><span class="text-xs font-bold text-amber-800 block">Cấp độ 2: TRUNG BÌNH</span><p class="text-xs text-gray-600 mt-1">Da nổi mẩn đỏ li ti, ngứa ngáy nhiều.</p></div>
-              <div class="p-3 rounded-lg border border-red-200 bg-red-50/40"><span class="text-xs font-bold text-red-800 block">Cấp độ 3: NẶNG</span><p class="text-xs text-gray-600 mt-1">Da sưng nề, rát đỏ kèm mụn nước mủ.</p></div>
+        <!-- Các nhánh cấp độ phản ứng da -->
+        <div class="p-4 border-t border-[#e4e2da] bg-gray-50/50 space-y-3">
+          <span class="text-xs font-bold text-gray-600 block uppercase tracking-wider">Bảng phân loại mức độ kích ứng da:</span>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="p-3 rounded-lg border border-emerald-200 bg-emerald-50/40">
+              <span class="text-xs font-bold text-emerald-800 block editable-field">Cấp độ 1: NHẸ</span>
+              <p class="text-xs text-gray-600 mt-1 editable-field">Châm chích nhẹ, ngứa thoáng qua dưới 15 phút. Hướng dẫn giãn tần suất dùng.</p>
             </div>
-            <div class="mt-4 pt-2 flex justify-end">
-              <a href="https://docs.google.com/document/d/1bCvICV-rYWDxcXE1674bjVxLqCEuojjva1drsDZL5lc/edit?usp=sharing" target="_blank" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-sm transition">
-                <i class="fa-solid fa-file-shield"></i> Xem Chính sách đền bù Ori Derm
-              </a>
+            <div class="p-3 rounded-lg border border-amber-200 bg-amber-50/40">
+              <span class="text-xs font-bold text-amber-800 block editable-field">Cấp độ 2: TRUNG BÌNH</span>
+              <p class="text-xs text-gray-600 mt-1 editable-field">Da nổi mẩn đỏ li ti dai dẳng, ngứa ngáy nhiều. Dừng toàn bộ dưỡng chất, chỉ dùng serum phục hồi B5.</p>
+            </div>
+            <div class="p-3 rounded-lg border border-red-200 bg-red-50/40">
+              <span class="text-xs font-bold text-red-800 block editable-field">Cấp độ 3: NẶNG</span>
+              <p class="text-xs text-gray-600 mt-1 editable-field">Da sưng nề, rát đỏ kèm mụn nước mủ. Chỉ định dừng ngay lập tức và khuyên khách đến phòng khám da liễu gần nhất.</p>
             </div>
           </div>
-        </div>
 
-        <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm" style="margin-top: 24px !important;">
-          <div class="bg-amber-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
-            <span class="px-2.5 py-1 text-[11px] font-bold bg-amber-100 text-amber-800 rounded-md">LUỒNG 4</span>
-            <span class="font-bold text-gray-800 text-sm">Kiểm tra uy tín thương hiệu / Chất lượng hàng hóa</span>
-          </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
-            <div class="p-4"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 1</span><span class="text-xs font-bold text-gray-800 block">Tuyệt đối không phản kháng</span></div>
-            <div class="p-4"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2</span><span class="text-xs font-bold text-gray-800 block">Đưa bằng chứng trực quan</span></div>
-            <div class="p-4"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 3</span><span class="text-xs font-bold text-gray-800 block">Hỗ trợ xác minh thêm</span></div>
+          <!-- NÚT LINK CHÍNH SÁCH ĐỀN BÙ ORIDERM DẪN RA GOOGLE DOCS -->
+          <div class="mt-4 pt-2 flex justify-end">
+            <a href="https://docs.google.com/document/d/1bCvICV-rYWDxcXE1674bjVxLqCEuojjva1drsDZL5lc/edit?usp=sharing" target="_blank" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white text-xs font-bold py-2 px-4 rounded-lg shadow-sm transition duration-150">
+              <i class="fa-solid fa-file-shield"></i> Xem Chính sách đền bù Ori Derm
+            </a>
           </div>
         </div>
+      </div>
 
-        <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm" style="margin-top: 24px !important;">
-          <div class="bg-gray-100 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
-            <span class="px-2.5 py-1 text-[11px] font-bold bg-gray-200 text-gray-800 rounded-md">LUỒNG 5</span>
-            <span class="font-bold text-gray-800 text-sm">Truy vấn trạng thái Đơn hàng / Vận chuyển / Đổi trả</span>
+      <!-- LUỒNG 4 -->
+      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm" style="margin-top: 24px !important;">
+        <div class="bg-amber-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
+          <span class="px-2.5 py-1 text-[11px] font-bold bg-amber-100 text-amber-800 rounded-md">LUỒNG 4</span>
+          <span class="font-bold text-gray-800 text-sm editable-field">Kiểm tra uy tín thương hiệu / Chất lượng hàng hóa</span>
+          <span class="text-xs text-amber-700 font-semibold ml-auto editable-field">Tương tác nhạy cảm</span>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 1</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Tuyệt đối không phản kháng</span>
+            <p class="text-xs text-gray-500 editable-field">Chào đón thắc mắc của khách bằng thái độ cảm thông: "Rất cảm ơn bạn đã cẩn thận hỏi thông tin này..."</p>
           </div>
-          <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
-            <div class="p-4"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 1</span><span class="text-xs font-bold text-gray-800 block">Xin số điện thoại & Mã đơn</span></div>
-            <div class="p-4"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2</span><span class="text-xs font-bold text-gray-800 block">Xác minh & Đưa lịch trình</span></div>
-            <div class="p-4"><span class="text-[10px] font-bold text-gray-400 block">BƯỚC 3</span><span class="text-xs font-bold text-gray-800 block">Xử lý bù đắp (Nếu trễ)</span></div>
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Đưa bằng chứng trực quan</span>
+            <p class="text-xs text-gray-500 editable-field">Gửi hình ảnh giấy chứng nhận CO/CQ từ nhà sản xuất, tem chống giả, hóa đơn VAT nhập khẩu và mã quét barcode.</p>
+          </div>
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 3</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Hỗ trợ xác minh thêm</span>
+            <p class="text-xs text-gray-500 editable-field">Cam kết đền tiền 300% nếu phát hiện lỗi hàng giả, mời gọi tới hotline 098 805 1350 của công ty.</p>
           </div>
         </div>
-      </section>
-    </div>
+      </div>
+
+      <!-- LUỒNG 5 -->
+      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm mt-6">
+        <div class="bg-gray-100 border-b border-[#e4e2da] px-5 py-3.5 flex items-center gap-2">
+          <span class="px-2.5 py-1 text-[11px] font-bold bg-gray-200 text-gray-800 rounded-md">LUỒNG 5</span>
+          <span class="font-bold text-gray-800 text-sm editable-field">Truy vấn trạng thái Đơn hàng / Vận chuyển / Đổi trả</span>
+          <span class="text-xs text-gray-500 font-semibold ml-auto editable-field">Thời hạn cam kết xử lý: 5 Phút</span>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 divide-y md:divide-y-0 md:divide-x divide-[#e4e2da] bg-white">
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 1</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Xin số điện thoại &amp; Mã đơn</span>
+            <p class="text-xs text-gray-500 editable-field">Hỏi nhanh thông tin cốt lõi để tra cứu hệ thống CRM ngay lập tức.</p>
+          </div>
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 2</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Xác minh &amp; Đưa lịch trình</span>
+            <p class="text-xs text-gray-500 editable-field">Thông báo đúng vị trí bưu cục hiện tại, tên hãng giao hàng và thời gian dự kiến nhận.</p>
+          </div>
+          <div class="p-4 space-y-1">
+            <span class="text-[10px] font-bold text-gray-400 block">BƯỚC 3</span>
+            <span class="text-xs font-bold text-gray-800 block editable-field">Xử lý bù đắp (Nếu trễ)</span>
+            <p class="text-xs text-gray-500 editable-field">Nếu lỗi giao chậm từ bưu điện, tặng ngay mã ưu đãi voucher cho đơn hàng kế tiếp.</p>
+          </div>
+        </div>
+      </div>
 
     <div id="screen-man-hinh-moi-1" class="screen-content space-y-4 hidden">
       <div class="bg-white p-8 rounded-xl border border-[#e4e2da] shadow-sm text-center">
