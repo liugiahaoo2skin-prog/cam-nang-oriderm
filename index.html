@@ -164,6 +164,21 @@ a{text-decoration:none;color:inherit}
 .cta-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;background:var(--red);color:var(--white);border-radius:var(--radius);font-weight:600;font-size:.85rem;margin-top:12px;transition:var(--transition)}
 .cta-btn:hover{opacity:.9;transform:translateY(-1px)}
 
+/* ═══════════════ FLOW EDIT ═══════════════ */
+.flow-header-right{display:flex;align-items:center;gap:8px}
+.flow-edit-btn{width:32px;height:32px;border-radius:var(--radius-sm);display:flex;align-items:center;justify-content:center;color:var(--gray400);font-size:1rem;transition:var(--transition);flex-shrink:0}
+.flow-edit-btn:hover{color:var(--blue);background:var(--blue-light)}
+.flow-edit-form{padding:16px 20px;background:var(--gray50);border-top:1px solid var(--gray200)}
+.flow-edit-form .fe-step{padding:12px;margin-bottom:10px;background:var(--white);border:1px solid var(--gray200);border-radius:var(--radius-sm)}
+.flow-edit-form .fe-step-num{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--acc);margin-bottom:6px}
+.flow-edit-form label{font-size:.78rem;font-weight:600;color:var(--gray500);display:block;margin-bottom:3px}
+.flow-edit-form input,.flow-edit-form textarea{width:100%;padding:8px 10px;border:1px solid var(--gray200);border-radius:var(--radius-sm);outline:none;font-size:.85rem;margin-bottom:8px;transition:var(--transition)}
+.flow-edit-form input:focus,.flow-edit-form textarea:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgba(29,158,117,.1)}
+.flow-edit-form textarea{resize:vertical;min-height:50px}
+.fe-tip-wrap{padding:12px;margin-bottom:10px;background:var(--light);border:1px solid var(--acc);border-radius:var(--radius-sm)}
+.fe-tip-wrap label{color:var(--pri)}
+.fe-actions{display:flex;gap:8px;margin-top:4px}
+
 /* ═══════════════ SECTION 2: MẪU TIN NHẮN ═══════════════ */
 .cat-tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
 .cat-tab{padding:8px 16px;border-radius:20px;font-size:.83rem;font-weight:500;border:1px solid var(--gray200);background:var(--white);color:var(--gray600);transition:var(--transition)}
@@ -532,7 +547,7 @@ const DEFAULT_TEMPLATES = {
   ]
 };
 
-const FLOWS_DATA = [
+const DEFAULT_FLOWS_DATA = [
   {
     title: 'Luồng 1 — Khách tìm hiểu sản phẩm cụ thể',
     badge: 'Tỷ lệ gặp: 70%', badgeClass: 'badge-teal', color: 'teal',
@@ -590,6 +605,8 @@ const FLOWS_DATA = [
     ]
   }
 ];
+let flowsData = getLS('flows_data', null) || JSON.parse(JSON.stringify(DEFAULT_FLOWS_DATA));
+let editingFlowIdx = null;
 
 /* ═══════════════════════════════════════
    HELPERS
@@ -700,9 +717,15 @@ function escHtml(s) { const d = document.createElement('div'); d.textContent = s
    ═══════════════════════════════════════ */
 function renderFlows() {
   const container = document.getElementById('flowsContainer');
-  container.innerHTML = FLOWS_DATA.map((flow, idx) => {
+  container.innerHTML = flowsData.map((flow, idx) => {
     const colorMap = { teal: 'var(--teal)', blue: 'var(--blue)', red: 'var(--red)', purple: 'var(--purple)' };
     const c = colorMap[flow.color] || 'var(--teal)';
+
+    // If this flow is being edited, show edit form
+    if (editingFlowIdx === idx) {
+      return renderFlowEditForm(flow, idx, c);
+    }
+
     let stepsHtml = flow.steps.map((s, si) => {
       let arrow = si < flow.steps.length - 1 ? '<div class="flow-arrow"><i class="ti ti-chevron-right"></i></div>' : '';
       return `
@@ -734,7 +757,10 @@ function renderFlows() {
       <div class="flow-card" data-search-target>
         <div class="flow-header" onclick="toggleFlow(this)">
           <div class="flow-title"><i class="ti ti-git-branch" style="color:${c}"></i>${escHtml(flow.title)}</div>
-          <span class="badge ${flow.badgeClass}">${escHtml(flow.badge)}</span>
+          <div class="flow-header-right">
+            <button class="flow-edit-btn" onclick="event.stopPropagation();startEditFlow(${idx})" aria-label="Chỉnh sửa luồng"><i class="ti ti-pencil"></i></button>
+            <span class="badge ${flow.badgeClass}">${escHtml(flow.badge)}</span>
+          </div>
         </div>
         <div class="flow-body${idx === 0 ? ' open' : ''}">
           <div class="flow-content">
@@ -744,6 +770,71 @@ function renderFlows() {
         </div>
       </div>`;
   }).join('');
+}
+
+function renderFlowEditForm(flow, idx, c) {
+  let stepsFields = flow.steps.map((s, si) => `
+    <div class="fe-step">
+      <div class="fe-step-num">${escHtml(s.num)}</div>
+      <label>Tiêu đề bước</label>
+      <input type="text" id="feTitle_${idx}_${si}" value="${escAttr(s.title)}">
+      <label>Mô tả</label>
+      <textarea id="feDesc_${idx}_${si}" rows="2">${escHtml(s.desc)}</textarea>
+    </div>
+  `).join('');
+
+  let tipField = '';
+  if (flow.tip !== undefined) {
+    tipField = `
+      <div class="fe-tip-wrap">
+        <label><i class="ti ti-bulb"></i> Mẹo Dược sĩ</label>
+        <textarea id="feTip_${idx}" rows="2">${escHtml(flow.tip || '')}</textarea>
+      </div>`;
+  }
+
+  return `
+    <div class="flow-card" data-search-target>
+      <div class="flow-header" style="cursor:default;background:var(--blue-light)">
+        <div class="flow-title"><i class="ti ti-pencil" style="color:var(--blue)"></i> Đang chỉnh sửa: ${escHtml(flow.title)}</div>
+        <span class="badge badge-blue">Chế độ chỉnh sửa</span>
+      </div>
+      <div class="flow-edit-form">
+        ${stepsFields}
+        ${tipField}
+        <div class="fe-actions">
+          <button class="btn btn-primary" onclick="saveEditFlow(${idx})"><i class="ti ti-check"></i> Lưu thay đổi</button>
+          <button class="btn btn-ghost" onclick="cancelEditFlow()">Hủy</button>
+        </div>
+      </div>
+    </div>`;
+}
+
+function startEditFlow(idx) {
+  editingFlowIdx = idx;
+  renderFlows();
+}
+
+function cancelEditFlow() {
+  editingFlowIdx = null;
+  renderFlows();
+}
+
+function saveEditFlow(idx) {
+  const flow = flowsData[idx];
+  // Read step values
+  flow.steps.forEach((s, si) => {
+    const titleEl = document.getElementById('feTitle_' + idx + '_' + si);
+    const descEl = document.getElementById('feDesc_' + idx + '_' + si);
+    if (titleEl) s.title = titleEl.value.trim() || s.title;
+    if (descEl) s.desc = descEl.value.trim() || s.desc;
+  });
+  // Read tip
+  const tipEl = document.getElementById('feTip_' + idx);
+  if (tipEl) flow.tip = tipEl.value.trim();
+  // Persist
+  setLS('flows_data', flowsData);
+  editingFlowIdx = null;
+  renderFlows();
 }
 
 function toggleFlow(header) {
@@ -979,6 +1070,7 @@ function init() {
   if (!localStorage.getItem('qu_green')) setLS('qu_green', quGreen);
   if (!localStorage.getItem('qu_red')) setLS('qu_red', quRed);
   if (!localStorage.getItem('templates')) { setLS('templates', templates); setLS('categories', categories); }
+  if (!localStorage.getItem('flows_data')) setLS('flows_data', flowsData);
 
   renderQuList('green');
   renderQuList('red');
