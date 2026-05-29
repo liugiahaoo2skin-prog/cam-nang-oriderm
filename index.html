@@ -649,28 +649,92 @@
   </script>
 </body>
 </html>
+<!-- ======================================================================= -->
+<!--             ĐƯỜNG RANH GIỚI BẢO VỆ: KHÔNG ĐỤNG VÀO CODE TRÊN            -->
+<!-- ======================================================================= -->
+<!-- Toàn bộ phần kết nối Database và Module CSKH mới sẽ được viết từ đây đổ xuống -->
+
+<!-- 1. Nạp thư viện kết nối của Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  // 2. Chìa khóa kết nối (Khi nào tạo xong dự án Supabase bạn điền mã vào đây sau)
-  const SUPABASE_URL = "https://your-project-id.supabase.co"; 
-  const SUPABASE_ANON_KEY = "your-anon-key-chuoi-chu-dai-ngoang";
+  // 2. Chìa khóa kết nối thực tế đã thông nòng
+  const SUPABASE_URL = "https://radtumharsixgohoukdp.supabase.co"; 
+  const SUPABASE_ANON_KEY = "sb_publishable_5K4UMI9LcXKpwYjPadjS3Q_T36tigt9";
   
   const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // 3. Hàm mẫu để tự động lấy dữ liệu SKU đổ vào phân hệ của bạn mà không lỗi giao diện cũ
+  // 3. Hàm tự động lấy dữ liệu từ Supabase và vẽ giao diện SKU đẹp mắt bằng Tailwind
   async function loadDataSKU() {
-    const { data: bang_sku, error } = await supabase
+    const { data: list_sku, error } = await supabase
       .from('bang_sku')
       .select('*');
 
-    if (error) {
-      console.log("Chưa kết nối được database hoặc bảng trống:", error.message);
+    // Tìm đúng cái khung màn hình Phân hệ 2 của bạn (Hào check lại id của div màn hình 2 xem đúng chưa nhé)
+    const skuScreen = document.getElementById('screen-man-hinh-moi-1'); 
+    if (!skuScreen) return;
+
+    if (error || !list_sku || list_sku.length === 0) {
+      skuScreen.innerHTML = `
+        <div class="p-6 text-center text-gray-500">
+          <p class="text-lg font-semibold">🔍 Chưa có dữ liệu SKU nào được tìm thấy</p>
+          <p class="text-sm">Bạn hãy vào trang quản trị Supabase để thêm vài sản phẩm mẫu vào bảng "bang_sku" nhé!</p>
+        </div>
+      `;
       return;
     }
-    console.log("Dữ liệu SKU từ Supabase đã về:", bang_sku);
+
+    // Thiết kế cấu trúc bảng tra cứu thông minh chuẩn phong cách OriDerm
+    let htmlContent = `
+      <div class="p-6 max-w-7xl mx-auto">
+        <div class="mb-6">
+          <h2 class="text-2xl font-bold text-gray-800">DANH MỤC SKU & THÀNH PHẦN</h2>
+          <p class="text-sm text-gray-500">Tra cứu nhanh hoạt chất, công năng và hướng dẫn sử dụng sản phẩm</p>
+        </div>
+        
+        <!-- Bảng hiển thị -->
+        <div class="overflow-x-auto bg-white rounded-lg shadow border border-gray-200">
+          <table class="min-w-full divide-y divide-gray-200 text-left text-sm">
+            <thead class="bg-gray-50 text-gray-700 font-semibold uppercase text-xs">
+              <tr>
+                <th class="px-6 py-3">Mã SKU</th>
+                <th class="px-6 py-3">Tên sản phẩm</th>
+                <th class="px-6 py-3">Thương hiệu</th>
+                <th class="px-6 py-3">Thành phần chính</th>
+                <th class="px-6 py-3">Công năng / Đối tượng</th>
+                <th class="px-6 py-3">Cách dùng</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-200 text-gray-600">
+    `;
+
+    // Vòng lặp tự động đổ từng dòng sản phẩm từ Supabase ra bảng HTML
+    list_sku.forEach(item => {
+      htmlContent += `
+        <tr class="hover:bg-gray-50 transition">
+          <td class="px-6 py-4 font-mono text-xs font-semibold text-gray-500">${item.ma_sku || ''}</td>
+          <td class="px-6 py-4 font-bold text-gray-900">${item.ten_san_pham || ''}</td>
+          <td class="px-6 py-4"><span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full font-medium">${item.thuong_hieu || ''}</span></td>
+          <td class="px-6 py-4 font-medium text-emerald-600">${item.thanh_phan || ''}</td>
+          <td class="px-6 py-4 text-xs">${item.cong_nang || ''}</td>
+          <td class="px-6 py-4 text-xs text-gray-400 italic">${item.huong_dan || ''}</td>
+        </tr>
+      `;
+    });
+
+    htmlContent += `
+            </tbody>
+          </table>
+        </div>
+      </div>
+    `;
+
+    // Bắn toàn bộ giao diện bảng này vào đúng phân hệ 2 của bạn
+    skuScreen.innerHTML = htmlContent;
   }
 
-  // Chạy thử hàm kiểm tra kết nối ẩn ngầm
-  loadDataSKU();
+  // Chạy hàm kích hoạt khi load trang
+  document.addEventListener("DOMContentLoaded", () => {
+    loadDataSKU();
+  });
 </script>
