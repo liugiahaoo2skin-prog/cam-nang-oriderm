@@ -652,89 +652,90 @@
 <!-- ======================================================================= -->
 <!--             ĐƯỜNG RANH GIỚI BẢO VỆ: KHÔNG ĐỤNG VÀO CODE TRÊN            -->
 <!-- ======================================================================= -->
-<!-- Toàn bộ phần kết nối Database và Module CSKH mới sẽ được viết từ đây đổ xuống -->
 
-<!-- 1. Nạp thư viện kết nối của Supabase -->
+<!-- A. TỰ XÂY THÊM PHÒNG TRA CỨU SKU MỚI (NẰM DƯỚI NÀY NÊN KHÔNG ẢNH HƯỞNG AI) -->
+<div id="screen-tra-cuu-sku" class="screen-content space-y-4 hidden max-w-4xl w-full mx-auto px-4">
+  <!-- Bảng dữ liệu từ Supabase sẽ tự động được điền vào đây -->
+</div>
+
+<!-- B. NẠP THƯ VIỆN & CODE KẾT NỐI DATABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  // 2. Chìa khóa kết nối thực tế đã thông nòng
   const SUPABASE_URL = "https://radtumharsixgohoukdp.supabase.co"; 
   const SUPABASE_ANON_KEY = "sb_publishable_5K4UMI9LcXKpwYjPadjS3Q_T36tigt9";
-  
   const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  // 3. Hàm tự động lấy dữ liệu từ Supabase và vẽ giao diện SKU đẹp mắt bằng Tailwind
+  // Hàm quét dữ liệu từ Supabase và tự vẽ thành bảng tra cứu
   async function loadDataSKU() {
-    const { data: list_sku, error } = await supabase
-      .from('bang_sku')
-      .select('*');
-
-    // Tìm đúng cái khung màn hình Phân hệ 2 của bạn (Hào check lại id của div màn hình 2 xem đúng chưa nhé)
-    const skuScreen = document.getElementById('screen-man-hinh-moi-1'); 
+    const { data: list_sku, error } = await supabase.from('bang_sku').select('*');
+    const skuScreen = document.getElementById('screen-tra-cuu-sku'); 
     if (!skuScreen) return;
 
     if (error || !list_sku || list_sku.length === 0) {
       skuScreen.innerHTML = `
-        <div class="p-6 text-center text-gray-500">
-          <p class="text-lg font-semibold">🔍 Chưa có dữ liệu SKU nào được tìm thấy</p>
-          <p class="text-sm">Bạn hãy vào trang quản trị Supabase để thêm vài sản phẩm mẫu vào bảng "bang_sku" nhé!</p>
+        <div class="bg-white p-8 rounded-xl border border-[#e4e2da] shadow-sm text-center">
+          <p class="text-lg font-semibold text-gray-700">🔍 Hệ thống đã kết nối Supabase thành công!</p>
+          <p class="text-sm text-gray-400 mt-1">Bảng "bang_sku" hiện đang trống. Hào hãy lên Supabase nhập vài sản phẩm dermo-cosmetics làm mẫu nha.</p>
         </div>
       `;
       return;
     }
 
-    // Thiết kế cấu trúc bảng tra cứu thông minh chuẩn phong cách OriDerm
+    // Giao diện bảng tra cứu hoạt chất sản phẩm chuẩn phong cách OriDerm
     let htmlContent = `
-      <div class="p-6 max-w-7xl mx-auto">
-        <div class="mb-6">
-          <h2 class="text-2xl font-bold text-gray-800">DANH MỤC SKU & THÀNH PHẦN</h2>
-          <p class="text-sm text-gray-500">Tra cứu nhanh hoạt chất, công năng và hướng dẫn sử dụng sản phẩm</p>
+      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
+        <div class="bg-emerald-50 border-b border-[#e4e2da] px-5 py-3.5">
+          <h3 class="font-bold text-gray-800 text-sm">DANH MỤC SKU & THÀNH PHẦN HOẠT CHẤT</h3>
+          <p class="text-xs text-gray-500 mt-0.5">Dữ liệu cập nhật trực tuyến từ Database nội bộ</p>
         </div>
-        
-        <!-- Bảng hiển thị -->
-        <div class="overflow-x-auto bg-white rounded-lg shadow border border-gray-200">
-          <table class="min-w-full divide-y divide-gray-200 text-left text-sm">
-            <thead class="bg-gray-50 text-gray-700 font-semibold uppercase text-xs">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm">
+            <thead class="bg-gray-50 border-b border-[#e4e2da] text-xs font-bold text-gray-500 uppercase">
               <tr>
-                <th class="px-6 py-3">Mã SKU</th>
-                <th class="px-6 py-3">Tên sản phẩm</th>
-                <th class="px-6 py-3">Thương hiệu</th>
-                <th class="px-6 py-3">Thành phần chính</th>
-                <th class="px-6 py-3">Công năng / Đối tượng</th>
-                <th class="px-6 py-3">Cách dùng</th>
+                <th class="px-5 py-3">Mã SKU</th>
+                <th class="px-5 py-3">Tên sản phẩm</th>
+                <th class="px-5 py-3">Thương hiệu</th>
+                <th class="px-5 py-3">Thành phần</th>
+                <th class="px-5 py-3">Công năng / Cách dùng</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-gray-200 text-gray-600">
+            <tbody class="divide-y divide-[#e4e2da]">
     `;
 
-    // Vòng lặp tự động đổ từng dòng sản phẩm từ Supabase ra bảng HTML
     list_sku.forEach(item => {
       htmlContent += `
-        <tr class="hover:bg-gray-50 transition">
-          <td class="px-6 py-4 font-mono text-xs font-semibold text-gray-500">${item.ma_sku || ''}</td>
-          <td class="px-6 py-4 font-bold text-gray-900">${item.ten_san_pham || ''}</td>
-          <td class="px-6 py-4"><span class="px-2 py-1 bg-gray-100 text-gray-700 text-xs rounded-full font-medium">${item.thuong_hieu || ''}</span></td>
-          <td class="px-6 py-4 font-medium text-emerald-600">${item.thanh_phan || ''}</td>
-          <td class="px-6 py-4 text-xs">${item.cong_nang || ''}</td>
-          <td class="px-6 py-4 text-xs text-gray-400 italic">${item.huong_dan || ''}</td>
+        <tr class="hover:bg-gray-50/50 transition">
+          <td class="px-5 py-4 font-mono text-xs font-semibold text-gray-400">${item.ma_sku || ''}</td>
+          <td class="px-5 py-4 font-bold text-gray-900">${item.ten_san_pham || ''}</td>
+          <td class="px-5 py-4"><span class="px-2 py-0.5 bg-gray-100 text-gray-700 text-xs rounded font-medium">${item.thuong_hieu || ''}</span></td>
+          <td class="px-5 py-4 font-medium text-emerald-600 text-xs">${item.thanh_phan || ''}</td>
+          <td class="px-5 py-4 text-xs space-y-1">
+            <p class="text-gray-700 font-medium">${item.cong_nang || ''}</p>
+            <p class="text-gray-400 italic">${item.huong_dan || ''}</p>
+          </td>
         </tr>
       `;
     });
 
-    htmlContent += `
-            </tbody>
-          </table>
-        </div>
-      </div>
-    `;
-
-    // Bắn toàn bộ giao diện bảng này vào đúng phân hệ 2 của bạn
+    htmlContent += `</tbody></table></div></div>`;
     skuScreen.innerHTML = htmlContent;
   }
 
-  // Chạy hàm kích hoạt khi load trang
+  // CÁCH KẾT NỐI VÀO MENU 3 SỌC CŨ CỦA BẠN:
+  // Tui sẽ lách luật, sửa nút "Mẫu tin nhắn CSKH" biến thành nút "Tra cứu SKU" luôn
   document.addEventListener("DOMContentLoaded", () => {
+    // 1. Tìm cái nút thứ 2 trong menu của bạn
+    const skuButton = document.querySelectorAll('#sidebarMenu nav button')[1];
+    if (skuButton) {
+      // Đổi chữ hiển thị trên menu thành Tra cứu SKU cho đúng thực tế
+      skuButton.innerHTML = `<i class="fa-solid fa-boxes-stacked w-5 text-left"></i> Tra cứu SKU & Thành phần`;
+      
+      // Bẻ lái lệnh click: Khi bấm vào nút này, nó sẽ mở cái phòng mới tinh của mình ra
+      skuButton.setAttribute('onclick', "switchScreen('tra-cuu-sku')");
+    }
+    
+    // 2. Chạy kích hoạt nạp dữ liệu ngầm từ Supabase
     loadDataSKU();
   });
 </script>
