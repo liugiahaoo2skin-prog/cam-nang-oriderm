@@ -653,6 +653,7 @@
 <!--             ĐƯỜNG RANH GIỚI BẢO VỆ: KHÔNG ĐỤNG VÀO CODE TRÊN            -->
 <!-- ======================================================================= -->
 
+<!-- NẠP THƯ VIỆN & CODE KẾT NỐI DATABASE SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
@@ -663,11 +664,10 @@
   async function loadDataSKU() {
     const { data: list_sku, error } = await supabaseApp.from('bang_sku').select('*');
     
-    // Nhắm thẳng vào cái hộp màn hình 1 có sẵn trong code gốc của bạn
-    const skuScreen = document.getElementById('screen-man-hinh-moi-1'); 
+    // CHUYỂN SANG ÉP VÀO HỘP SỐ 3 ĐỂ TRÁNH BỊ DÍNH CACHE CŨ
+    const skuScreen = document.getElementById('screen-man-hinh-moi-3'); 
     if (!skuScreen) return;
 
-    // Nếu trên Supabase chưa nhập gì, hiện thông báo đẹp mắt chuẩn CSS của bạn luôn
     if (error || !list_sku || list_sku.length === 0) {
       skuScreen.innerHTML = `
         <div class="bg-white p-8 rounded-xl border border-[#e4e2da] shadow-sm text-center">
@@ -682,7 +682,6 @@
       return;
     }
 
-    // Nếu đã có dữ liệu, vẽ cái bảng tra cứu dermo-cosmetics cực chuyên nghiệp
     let htmlContent = `
       <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
         <div class="bg-emerald-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center justify-between">
@@ -725,13 +724,12 @@
     skuScreen.innerHTML = htmlContent;
   }
 
-  // Khớp lệnh nút bấm menu cũ vào cái hộp có sẵn
+  // ÉP CÁI NÚT MENU SỐ 2 KÍCH HOẠT HỘP SỐ 3
   document.addEventListener("DOMContentLoaded", () => {
     const skuButton = document.querySelectorAll('#sidebarMenu nav button')[1];
     if (skuButton) {
       skuButton.innerHTML = `<i class="fa-solid fa-boxes-stacked w-5 text-left"></i> Tra cứu SKU & Thành phần`;
-      // Bắt nó mở cái hộp hinh-moi-1 có sẵn ra
-      skuButton.setAttribute('onclick', "switchScreen('man-hinh-moi-1')");
+      skuButton.setAttribute('onclick', "switchScreen('man-hinh-moi-3')");
     }
     loadDataSKU();
   });
