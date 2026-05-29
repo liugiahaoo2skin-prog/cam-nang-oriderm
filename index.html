@@ -653,22 +653,21 @@
 <!--             ĐƯỜNG RANH GIỚI BẢO VỆ: KHÔNG ĐỤNG VÀO CODE TRÊN            -->
 <!-- ======================================================================= -->
 
-<!-- A. TỰ XÂY THÊM PHÒNG TRA CỨU SKU MỚI (NẰM DƯỚI NÀY NÊN KHÔNG ẢNH HƯỞNG AI) -->
 <div id="screen-tra-cuu-sku" class="screen-content space-y-4 hidden max-w-4xl w-full mx-auto px-4">
-  <!-- Bảng dữ liệu từ Supabase sẽ tự động được điền vào đây -->
-</div>
+  </div>
 
-<!-- B. NẠP THƯ VIỆN & CODE KẾT NỐI DATABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  const SUPABASE_URL = "https://radtumharsixgohoukdp.supabase.co"; 
-  const SUPABASE_ANON_KEY = "sb_publishable_5K4UMI9LcXKpwYjPadjS3Q_T36tigt9";
-  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+  // Chỉ khai báo ĐÚNG 1 LẦN DUY NHẤT ở đây, không trùng lặp
+  const SITE_SUPABASE_URL = "https://radtumharsixgohoukdp.supabase.co"; 
+  const SITE_SUPABASE_ANON_KEY = "sb_publishable_5K4UMI9LcXKpwYjPadjS3Q_T36tigt9";
+  
+  const supabaseApp = supabase.createClient(SITE_SUPABASE_URL, SITE_SUPABASE_ANON_KEY);
 
   // Hàm quét dữ liệu từ Supabase và tự vẽ thành bảng tra cứu
   async function loadDataSKU() {
-    const { data: list_sku, error } = await supabase.from('bang_sku').select('*');
+    const { data: list_sku, error } = await supabaseApp.from('bang_sku').select('*');
     const skuScreen = document.getElementById('screen-tra-cuu-sku'); 
     if (!skuScreen) return;
 
@@ -722,20 +721,13 @@
     skuScreen.innerHTML = htmlContent;
   }
 
-  // CÁCH KẾT NỐI VÀO MENU 3 SỌC CŨ CỦA BẠN:
-  // Tui sẽ lách luật, sửa nút "Mẫu tin nhắn CSKH" biến thành nút "Tra cứu SKU" luôn
+  // Ép menu bẻ lái lệnh click
   document.addEventListener("DOMContentLoaded", () => {
-    // 1. Tìm cái nút thứ 2 trong menu của bạn
     const skuButton = document.querySelectorAll('#sidebarMenu nav button')[1];
     if (skuButton) {
-      // Đổi chữ hiển thị trên menu thành Tra cứu SKU cho đúng thực tế
       skuButton.innerHTML = `<i class="fa-solid fa-boxes-stacked w-5 text-left"></i> Tra cứu SKU & Thành phần`;
-      
-      // Bẻ lái lệnh click: Khi bấm vào nút này, nó sẽ mở cái phòng mới tinh của mình ra
       skuButton.setAttribute('onclick', "switchScreen('tra-cuu-sku')");
     }
-    
-    // 2. Chạy kích hoạt nạp dữ liệu ngầm từ Supabase
     loadDataSKU();
   });
 </script>
