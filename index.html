@@ -649,3 +649,28 @@
   </script>
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+  // 2. Chìa khóa kết nối (Khi nào tạo xong dự án Supabase bạn điền mã vào đây sau)
+  const SUPABASE_URL = "https://your-project-id.supabase.co"; 
+  const SUPABASE_ANON_KEY = "your-anon-key-chuoi-chu-dai-ngoang";
+  
+  const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+  // 3. Hàm mẫu để tự động lấy dữ liệu SKU đổ vào phân hệ của bạn mà không lỗi giao diện cũ
+  async function loadDataSKU() {
+    const { data: bang_sku, error } = await supabase
+      .from('bang_sku')
+      .select('*');
+
+    if (error) {
+      console.log("Chưa kết nối được database hoặc bảng trống:", error.message);
+      return;
+    }
+    console.log("Dữ liệu SKU từ Supabase đã về:", bang_sku);
+  }
+
+  // Chạy thử hàm kiểm tra kết nối ẩn ngầm
+  loadDataSKU();
+</script>
