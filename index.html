@@ -653,40 +653,44 @@
 <!--             ĐƯỜNG RANH GIỚI BẢO VỆ: KHÔNG ĐỤNG VÀO CODE TRÊN            -->
 <!-- ======================================================================= -->
 
-<div id="screen-tra-cuu-sku" class="screen-content space-y-4 hidden max-w-4xl w-full mx-auto px-4">
-  </div>
-
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  // Chỉ khai báo ĐÚNG 1 LẦN DUY NHẤT ở đây, không trùng lặp
   const SITE_SUPABASE_URL = "https://radtumharsixgohoukdp.supabase.co"; 
   const SITE_SUPABASE_ANON_KEY = "sb_publishable_5K4UMI9LcXKpwYjPadjS3Q_T36tigt9";
-  
   const supabaseApp = supabase.createClient(SITE_SUPABASE_URL, SITE_SUPABASE_ANON_KEY);
 
-  // Hàm quét dữ liệu từ Supabase và tự vẽ thành bảng tra cứu
   async function loadDataSKU() {
     const { data: list_sku, error } = await supabaseApp.from('bang_sku').select('*');
-    const skuScreen = document.getElementById('screen-tra-cuu-sku'); 
+    
+    // Nhắm thẳng vào cái hộp màn hình 1 có sẵn trong code gốc của bạn
+    const skuScreen = document.getElementById('screen-man-hinh-moi-1'); 
     if (!skuScreen) return;
 
+    // Nếu trên Supabase chưa nhập gì, hiện thông báo đẹp mắt chuẩn CSS của bạn luôn
     if (error || !list_sku || list_sku.length === 0) {
       skuScreen.innerHTML = `
         <div class="bg-white p-8 rounded-xl border border-[#e4e2da] shadow-sm text-center">
-          <p class="text-lg font-semibold text-gray-700">🔍 Hệ thống đã kết nối Supabase thành công!</p>
-          <p class="text-sm text-gray-400 mt-1">Bảng "bang_sku" hiện đang trống. Hào hãy lên Supabase nhập vài sản phẩm dermo-cosmetics làm mẫu nha.</p>
+          <i class="fa-solid fa-database text-4xl text-emerald-600 mb-3 block animate-bounce"></i>
+          <h2 class="font-bold text-lg text-gray-900">KẾT NỐI DATABASE THÀNH CÔNG!</h2>
+          <p class="text-xs text-gray-500 mt-1">Bảng "bang_sku" trên Supabase hiện đang trống trơn.</p>
+          <div class="mt-6 p-4 border border-dashed border-gray-300 rounded-lg text-xs text-gray-400 bg-gray-50">
+            Hào hãy vào trang Supabase, bấm <strong>Insert row</strong> để nhập thử 1-2 sản phẩm (Rilastil, Ducray...) là web tự hiện bảng lên liền nha!
+          </div>
         </div>
       `;
       return;
     }
 
-    // Giao diện bảng tra cứu hoạt chất sản phẩm chuẩn phong cách OriDerm
+    // Nếu đã có dữ liệu, vẽ cái bảng tra cứu dermo-cosmetics cực chuyên nghiệp
     let htmlContent = `
       <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-        <div class="bg-emerald-50 border-b border-[#e4e2da] px-5 py-3.5">
-          <h3 class="font-bold text-gray-800 text-sm">DANH MỤC SKU & THÀNH PHẦN HOẠT CHẤT</h3>
-          <p class="text-xs text-gray-500 mt-0.5">Dữ liệu cập nhật trực tuyến từ Database nội bộ</p>
+        <div class="bg-emerald-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center justify-between">
+          <div>
+            <h3 class="font-bold text-gray-800 text-sm">DANH MỤC SKU & THÀNH PHẦN HOẠT CHẤT</h3>
+            <p class="text-xs text-gray-500 mt-0.5">Dữ liệu cập nhật trực tuyến từ hệ thống Supabase</p>
+          </div>
+          <span class="px-2.5 py-1 text-[11px] font-bold bg-emerald-100 text-emerald-800 rounded-md">LIVE DATA</span>
         </div>
         <div class="overflow-x-auto">
           <table class="w-full text-left text-sm">
@@ -696,10 +700,10 @@
                 <th class="px-5 py-3">Tên sản phẩm</th>
                 <th class="px-5 py-3">Thương hiệu</th>
                 <th class="px-5 py-3">Thành phần</th>
-                <th class="px-5 py-3">Công năng / Cách dùng</th>
+                <th class="px-5 py-3">Công năng & Cách dùng</th>
               </tr>
             </thead>
-            <tbody class="divide-y divide-[#e4e2da]">
+            <tbody class="divide-y divide-[#e4e2da] bg-white">
     `;
 
     list_sku.forEach(item => {
@@ -721,12 +725,13 @@
     skuScreen.innerHTML = htmlContent;
   }
 
-  // Ép menu bẻ lái lệnh click
+  // Khớp lệnh nút bấm menu cũ vào cái hộp có sẵn
   document.addEventListener("DOMContentLoaded", () => {
     const skuButton = document.querySelectorAll('#sidebarMenu nav button')[1];
     if (skuButton) {
       skuButton.innerHTML = `<i class="fa-solid fa-boxes-stacked w-5 text-left"></i> Tra cứu SKU & Thành phần`;
-      skuButton.setAttribute('onclick', "switchScreen('tra-cuu-sku')");
+      // Bắt nó mở cái hộp hinh-moi-1 có sẵn ra
+      skuButton.setAttribute('onclick', "switchScreen('man-hinh-moi-1')");
     }
     loadDataSKU();
   });
