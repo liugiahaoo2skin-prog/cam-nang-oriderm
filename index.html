@@ -653,84 +653,136 @@
 <!--             ĐƯỜNG RANH GIỚI BẢO VỆ: KHÔNG ĐỤNG VÀO CODE TRÊN            -->
 <!-- ======================================================================= -->
 
-<!-- NẠP THƯ VIỆN & CODE KẾT NỐI DATABASE SUPABASE -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <script>
-  const SITE_SUPABASE_URL = "https://radtumharsixgohoukdp.supabase.co"; 
-  const SITE_SUPABASE_ANON_KEY = "sb_publishable_5K4UMI9LcXKpwYjPadjS3Q_T36tigt9";
-  const supabaseApp = supabase.createClient(SITE_SUPABASE_URL, SITE_SUPABASE_ANON_KEY);
+  // 1. Cấu hình cấu trúc kết nối an toàn với Supabase
+  const SUPABASE_CONFIG = {
+    url: "https://radtumharsixgohoukdp.supabase.co",
+    key: "sb_publishable_5K4UMI9LcXKpwYjPadjS3Q_T36tigt9"
+  };
+  const supabaseClient = supabase.createClient(SUPABASE_CONFIG.url, SUPABASE_CONFIG.key);
 
-  async function loadDataSKU() {
-    const { data: list_sku, error } = await supabaseApp.from('bang_sku').select('*');
-    
-    // CHUYỂN SANG ÉP VÀO HỘP SỐ 3 ĐỂ TRÁNH BỊ DÍNH CACHE CŨ
-    const skuScreen = document.getElementById('screen-man-hinh-moi-3'); 
-    if (!skuScreen) return;
+  // 2. Hàm Fetch dữ liệu và Render giao diện SKU động
+  async function renderSupabaseSKUTable() {
+    const targetContainer = document.getElementById('screen-man-hinh-moi-1');
+    if (!targetContainer) return;
 
-    if (error || !list_sku || list_sku.length === 0) {
-      skuScreen.innerHTML = `
-        <div class="bg-white p-8 rounded-xl border border-[#e4e2da] shadow-sm text-center">
-          <i class="fa-solid fa-database text-4xl text-emerald-600 mb-3 block animate-bounce"></i>
-          <h2 class="font-bold text-lg text-gray-900">KẾT NỐI DATABASE THÀNH CÔNG!</h2>
-          <p class="text-xs text-gray-500 mt-1">Bảng "bang_sku" trên Supabase hiện đang trống trơn.</p>
-          <div class="mt-6 p-4 border border-dashed border-gray-300 rounded-lg text-xs text-gray-400 bg-gray-50">
-            Hào hãy vào trang Supabase, bấm <strong>Insert row</strong> để nhập thử 1-2 sản phẩm (Rilastil, Ducray...) là web tự hiện bảng lên liền nha!
+    try {
+      const { data: list_sku, error } = await supabaseClient.from('bang_sku').select('*');
+
+      if (error || !list_sku || list_sku.length === 0) {
+        // Render trạng thái kết nối thành công nhưng bảng trống dữ liệu
+        targetContainer.innerHTML = `
+          <div class="bg-white p-8 rounded-xl border border-[#e4e2da] shadow-sm text-center max-w-2xl mx-auto mt-6">
+            <div class="w-12 h-12 rounded-lg bg-emerald-100 flex items-center justify-center mx-auto mb-3">
+              <i class="fa-solid fa-database text-emerald-600 text-xl"></i>
+            </div>
+            <h2 class="font-bold text-lg text-gray-900 uppercase tracking-tight">Hệ thống kết nối database thành công</h2>
+            <p class="text-xs text-gray-500 mt-1">Hộp hiển thị "screen-man-hinh-moi-1" đã thông suốt với Supabase.</p>
+            <div class="mt-6 p-4 border border-dashed border-gray-200 rounded-lg text-xs text-gray-500 bg-gray-50 leading-relaxed text-left">
+              📌 <strong>Trạng thái:</strong> Bảng <code>bang_sku</code> hiện chưa có dữ liệu.<br>
+              💡 <strong>Hành động:</strong> Hào hãy vào Supabase Table Editor, chọn bảng <strong>bang_sku</strong>, bấm <strong>Insert row</strong> để thêm sản phẩm mẫu. Web sẽ tự động đồng bộ hiển thị dạng bảng ngay lập tức!
+            </div>
           </div>
-        </div>
+        `;
+        return;
+      }
+
+      // Render cấu trúc bảng dữ liệu chuyên nghiệp chuẩn UI OriDerm
+      let tableHtml = `
+        <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm max-w-4xl mx-auto mt-4">
+          <div class="bg-emerald-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center justify-between">
+            <div>
+              <h3 class="font-bold text-gray-800 text-sm uppercase tracking-wider">Danh mục hiệu chuẩn SKU & Hoạt chất</h3>
+              <p class="text-[11px] text-gray-500 mt-0.5">Dữ liệu đồng bộ trực tuyến từ cơ sở dữ liệu nội bộ OriDerm</p>
+            </div>
+            <span class="px-2.5 py-1 text-[10px] font-bold bg-emerald-100 text-emerald-800 rounded uppercase tracking-widest">Live Data</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-sm">
+              <thead class="bg-gray-50 border-b border-[#e4e2da] text-xs font-bold text-gray-500 uppercase tracking-wider">
+                <tr>
+                  <th class="px-5 py-3">Mã SKU</th>
+                  <th class="px-5 py-3">Tên sản phẩm</th>
+                  <th class="px-5 py-3">Thương hiệu</th>
+                  <th class="px-5 py-3">Thành phần chính</th>
+                  <th class="px-5 py-3">Chỉ định / Cách dùng</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#e4e2da] bg-white text-gray-700">
       `;
-      return;
+
+      list_sku.forEach(item => {
+        tableHtml += `
+          <tr class="hover:bg-gray-50/60 transition duration-150">
+            <td class="px-5 py-4 font-mono text-xs font-semibold text-gray-400">${item.ma_sku || '—'}</td>
+            <td class="px-5 py-4 font-bold text-gray-900">${item.ten_san_pham || '—'}</td>
+            <td class="px-5 py-4"><span class="px-2 py-0.5 bg-gray-100 text-gray-600 text-xs rounded font-medium">${item.thuong_hieu || '—'}</span></td>
+            <td class="px-5 py-4 font-semibold text-emerald-600 text-xs">${item.thanh_phan || '—'}</td>
+            <td class="px-5 py-4 text-xs space-y-1">
+              <p class="text-gray-800 font-medium">${item.cong_nang || '—'}</p>
+              <p class="text-gray-400 italic">${item.huong_dan || ''}</p>
+            </td>
+          </tr>
+        `;
+      });
+
+      tableHtml += `</tbody></table></div></div>`;
+      targetContainer.innerHTML = tableHtml;
+
+    } catch (err) {
+      console.error("Hệ thống kiểm thử thất bại:", err);
     }
-
-    let htmlContent = `
-      <div class="bg-white rounded-xl border border-[#e4e2da] overflow-hidden shadow-sm">
-        <div class="bg-emerald-50 border-b border-[#e4e2da] px-5 py-3.5 flex items-center justify-between">
-          <div>
-            <h3 class="font-bold text-gray-800 text-sm">DANH MỤC SKU & THÀNH PHẦN HOẠT CHẤT</h3>
-            <p class="text-xs text-gray-500 mt-0.5">Dữ liệu cập nhật trực tuyến từ hệ thống Supabase</p>
-          </div>
-          <span class="px-2.5 py-1 text-[11px] font-bold bg-emerald-100 text-emerald-800 rounded-md">LIVE DATA</span>
-        </div>
-        <div class="overflow-x-auto">
-          <table class="w-full text-left text-sm">
-            <thead class="bg-gray-50 border-b border-[#e4e2da] text-xs font-bold text-gray-500 uppercase">
-              <tr>
-                <th class="px-5 py-3">Mã SKU</th>
-                <th class="px-5 py-3">Tên sản phẩm</th>
-                <th class="px-5 py-3">Thương hiệu</th>
-                <th class="px-5 py-3">Thành phần</th>
-                <th class="px-5 py-3">Công năng & Cách dùng</th>
-              </tr>
-            </thead>
-            <tbody class="divide-y divide-[#e4e2da] bg-white">
-    `;
-
-    list_sku.forEach(item => {
-      htmlContent += `
-        <tr class="hover:bg-gray-50/50 transition">
-          <td class="px-5 py-4 font-mono text-xs font-semibold text-gray-400">${item.ma_sku || ''}</td>
-          <td class="px-5 py-4 font-bold text-gray-900">${item.ten_san_pham || ''}</td>
-          <td class="px-5 py-4"><span class="px-2 py-0.5 bg-gray-100 text-gray-700 text-xs rounded font-medium">${item.thuong_hieu || ''}</span></td>
-          <td class="px-5 py-4 font-medium text-emerald-600 text-xs">${item.thanh_phan || ''}</td>
-          <td class="px-5 py-4 text-xs space-y-1">
-            <p class="text-gray-700 font-medium">${item.cong_nang || ''}</p>
-            <p class="text-gray-400 italic">${item.huong_dan || ''}</p>
-          </td>
-        </tr>
-      `;
-    });
-
-    htmlContent += `</tbody></table></div></div>`;
-    skuScreen.innerHTML = htmlContent;
   }
 
-  // ÉP CÁI NÚT MENU SỐ 2 KÍCH HOẠT HỘP SỐ 3
+  // 3. Hệ thống can thiệp Core (Vá lỗi logic hàm switchScreen gốc)
   document.addEventListener("DOMContentLoaded", () => {
-    const skuButton = document.querySelectorAll('#sidebarMenu nav button')[1];
-    if (skuButton) {
-      skuButton.innerHTML = `<i class="fa-solid fa-boxes-stacked w-5 text-left"></i> Tra cứu SKU & Thành phần`;
-      skuButton.setAttribute('onclick', "switchScreen('man-hinh-moi-3')");
+    // Đổi chữ hiển thị menu nút số 2 cho khớp thực tế phân hệ mới
+    const targetMenuButton = document.querySelectorAll('#sidebarMenu nav button')[1];
+    if (targetMenuButton) {
+      targetMenuButton.innerHTML = `<i class="fa-solid fa-boxes-stacked w-5 text-left"></i> Tra cứu SKU & Thành phần`;
     }
-    loadDataSKU();
+
+    // Ghi đè (Override) lại hàm switchScreen cũ để sửa lỗi nối chuỗi ID dị dạng
+    if (typeof window.switchScreen === 'function') {
+      const originalSwitchScreen = window.switchScreen;
+      
+      window.switchScreen = function(screenId) {
+        // Gọi lại logic ẩn toàn bộ màn hình cũ của bạn
+        const screens = document.querySelectorAll('.screen-content');
+        screens.forEach(screen => screen.classList.add('hidden'));
+
+        // Xử lý bẫy lỗi ID: Nếu truyền vào 'man-hinh-moi-1' mà ID thực tế đã có sẵn chữ 'screen-' 
+        // thì ta lấy thẳng luôn, không nối chuỗi trùng lặp nữa.
+        let actualId = screenId;
+        if (!document.getElementById(actualId) && document.getElementById('screen-' + screenId)) {
+          actualId = 'screen-' + screenId;
+        }
+
+        const activeScreen = document.getElementById(actualId);
+        if (activeScreen) {
+          activeScreen.classList.remove('hidden');
+        }
+
+        // Đồng bộ trạng thái active cho các nút menu cũ của bạn
+        const buttons = document.querySelectorAll('#sidebarMenu nav button');
+        buttons.forEach(btn => {
+          btn.classList.remove('bg-emerald-50', 'text-[#1D9E75]');
+          btn.classList.add('text-gray-600', 'hover:bg-gray-100');
+        });
+        if (event && event.currentTarget) {
+          event.currentTarget.classList.add('bg-emerald-50', 'text-[#1D9E75]');
+          event.currentTarget.classList.remove('text-gray-600', 'hover:bg-gray-100');
+        }
+
+        window.scrollTo(0, 0);
+        // Đóng sidebar (gọi hàm cũ của bạn)
+        if (typeof window.toggleSidebar === 'function') { window.toggleSidebar(); }
+      };
+    }
+
+    // Kích hoạt nạp dữ liệu từ cơ sở dữ liệu ngầm
+    renderSupabaseSKUTable();
   });
 </script>
